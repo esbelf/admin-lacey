@@ -7,7 +7,17 @@ import {
   ProtectedAdminRoute,
   UnauthenticatedRoute,
 } from "./components";
-import { AdminPage, LoginPage, RegisterPage, Page404, Page500 } from "./pages";
+import {
+  AdminPage,
+  CustomersPage,
+  DiscountsPage,
+  LoginPage,
+  OrderCreatePage,
+  OrdersPage,
+  OrdersShowPage,
+  Page404,
+  Page500,
+} from "./pages";
 
 function App() {
   return (
@@ -21,6 +31,15 @@ function App() {
               element={
                 <ProtectedAdminRoute>
                   <AdminPage />
+                </ProtectedAdminRoute>
+              }
+            />
+            <Route
+              path="/orders"
+              exact
+              element={
+                <ProtectedAdminRoute>
+                  <OrdersPage />
                 </ProtectedAdminRoute>
               }
             />

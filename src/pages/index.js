@@ -1,5 +1,9 @@
 export { default as AdminPage } from "./AdminPage";
+export { default as CustomersPage } from "./CustomersPage";
+export { default as DiscountsPage } from "./DiscountsPage";
 export { default as LoginPage } from "./LoginPage";
+export { default as OrderCreatePage } from "./OrderCreatePage";
+export { default as OrdersPage } from "./OrdersPage";
+export { default as OrderShowPage } from "./OrderShowPage";
 export { default as Page404 } from "./Page404";
 export { default as Page500 } from "./Page500";
-export { default as RegisterPage } from "./RegisterPage";

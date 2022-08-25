@@ -1,9 +1,10 @@
 import React from "react";
+import { Wrapper } from "../components/admin";
 
 export default function AdminPage() {
   return (
-    <div>
+    <Wrapper>
       <p>AdminPage</p>
-    </div>
+    </Wrapper>
   );
 }
