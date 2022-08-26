@@ -8,7 +8,7 @@ import { isNil, isEmpty } from "lodash";
 export function useApiFetch({ url }) {
   const { authToken, initialLoad } = useAuth();
   const { setErrorStatusCode } = useErrorStatus();
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

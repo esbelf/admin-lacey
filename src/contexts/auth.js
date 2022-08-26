@@ -22,7 +22,7 @@ export function AuthProvider({ children }) {
   const [initialLoad, setInitialLoad] = useState(true);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
-  const [jwtData, setJwtData] = useState(null);
+  const [jwtData, setJwtData] = useState({});
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -112,9 +112,9 @@ export function AuthProvider({ children }) {
       setLoading(false);
 
       if (decodedJWT["role"] === "admin") {
-        navigate.push("/admin");
+        navigate("/admin");
       } else {
-        navigate.push("/");
+        navigate("/");
       }
     } catch (err) {
       _handleError(err);
@@ -138,7 +138,7 @@ export function AuthProvider({ children }) {
     localStorage.removeItem(localStorageJWTKey);
     setAuthToken(null);
     setJwtData(null);
-    navigate.push("/login");
+    navigate("/login");
   }
 
   return (

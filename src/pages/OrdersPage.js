@@ -1,15 +1,23 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Wrapper, Table } from "../components/admin";
-import { TableCell, TableRow, Typography } from "@mui/material";
+import { Button, TableCell, TableRow, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export default function OrdersPage() {
   return (
     <Wrapper>
-      <div>
-        <Typography variant="h1">Orders</Typography>
+      <div className="flex flex-row justify-between">
+        <div className="flex-1">
+          <Typography variant="h2">Orders</Typography>
+        </div>
+        <div className="flex-1 flex flex-row justify-end items-center">
+          <Button to="/orders/new" component={Link} variant="contained">
+            Place New Order
+          </Button>
+        </div>
       </div>
+      <div className="my-5">Search Bar</div>
       <Table
         url={"/orders"}
         paginationKey={"orders"}

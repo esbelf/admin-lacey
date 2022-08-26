@@ -22,10 +22,9 @@ const pages = [
   { label: "Customers", url: "customers" },
   { label: "Discounts", url: "discounts" },
 ];
-const settings = ["Profile", "Logout"];
 
 const ResponsiveAppBar = () => {
-  const { jwtData } = useAuth();
+  const { jwtData, logout } = useAuth();
 
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
@@ -145,7 +144,7 @@ const ResponsiveAppBar = () => {
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar
-                  alt={jwtData["email"]}
+                  alt={jwtData["name"]}
                   src="/static/images/avatar/2.jpg"
                 />
               </IconButton>
@@ -166,11 +165,9 @@ const ResponsiveAppBar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+              <MenuItem onClick={logout}>
+                <Typography textAlign="center">Logout</Typography>
+              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>

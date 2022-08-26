@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./contexts/auth";
 import { ErrorHandlerProvider } from "./contexts/errorHandler";
@@ -47,6 +46,15 @@ function App() {
               element={
                 <ProtectedAdminRoute>
                   <DiscountsPage />
+                </ProtectedAdminRoute>
+              }
+            />
+            <Route
+              path="/orders/new"
+              exact
+              element={
+                <ProtectedAdminRoute>
+                  <OrderCreatePage />
                 </ProtectedAdminRoute>
               }
             />
