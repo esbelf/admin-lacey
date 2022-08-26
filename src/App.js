@@ -14,7 +14,7 @@ import {
   LoginPage,
   OrderCreatePage,
   OrdersPage,
-  OrdersShowPage,
+  OrderShowPage,
   Page404,
   Page500,
 } from "./pages";
@@ -31,6 +31,30 @@ function App() {
               element={
                 <ProtectedAdminRoute>
                   <AdminPage />
+                </ProtectedAdminRoute>
+              }
+            />
+            <Route
+              path="/customers"
+              element={
+                <ProtectedAdminRoute>
+                  <CustomersPage />
+                </ProtectedAdminRoute>
+              }
+            />
+            <Route
+              path="/discounts"
+              element={
+                <ProtectedAdminRoute>
+                  <DiscountsPage />
+                </ProtectedAdminRoute>
+              }
+            />
+            <Route
+              path="/orders/:id"
+              element={
+                <ProtectedAdminRoute>
+                  <OrderShowPage />
                 </ProtectedAdminRoute>
               }
             />

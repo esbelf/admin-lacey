@@ -1,10 +1,11 @@
 import React from "react";
+import { Wrapper, Table } from "../components/admin";
 
 function DiscountsPage() {
   return (
-    <div>
+    <Wrapper>
       <p>DiscountsPage</p>
-    </div>
+    </Wrapper>
   );
 }
 

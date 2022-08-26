@@ -1,10 +1,13 @@
 import React from "react";
+import { Wrapper, Table } from "../components/admin";
 
 function CustomersPage() {
   return (
-    <div>
-      <p>CustomersPage</p>
-    </div>
+    <Wrapper>
+      <div>
+        <p>CustomersPage</p>
+      </div>
+    </Wrapper>
   );
 }
 
