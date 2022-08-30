@@ -12,6 +12,7 @@
     "@testing-library/user-event": "^13.2.1",
     "autoprefixer": "^10.4.8",
     "axios": "^0.27.2",
+    "decamelize-keys": "^1.1.0",
     "humps": "^2.0.1",
     "jwt-decode": "^3.1.2",
     "lodash": "^4.17.21",
@@ -20,6 +21,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
+    "react-select": "^5.4.0",
     "tailwindcss": "^3.1.8",
     "web-vitals": "^2.1.0"
   },
