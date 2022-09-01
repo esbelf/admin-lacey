@@ -7,7 +7,7 @@ import { isNil } from "lodash";
 
 const AuthContext = createContext({});
 
-export const localStorageJWTKey = "lacey-jwt-key";
+export const localStorageJWTKey = process.env.REACT_APP_LOCAL_JWT;
 
 export const validateJwt = (data) => {
   const exp = new Date(data["exp"] * 1000);

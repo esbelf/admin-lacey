@@ -10,7 +10,7 @@ import {
   // PaymentElement
 } from "@stripe/react-stripe-js";
 
-import StripeCard from "../StripeCard";
+// import StripeCard from "../StripeCard";
 import Notification from "../Notification";
 
 import useOrder from "../../contexts/order";
@@ -142,8 +142,6 @@ export default function StripeCreditCardCheckout({ products, children }) {
 
       <div className="w-full py-4">
         <form onSubmit={handleSubmit}>
-          <StripeCard errorMessage={errorMessage} />
-
           {children}
 
           <button
