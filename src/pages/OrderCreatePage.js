@@ -33,8 +33,6 @@ function OrderCreatePage() {
   } = useOrder();
   const { jwtData } = useAuth();
 
-  console.log("EURO from user", jwtData["euro"], jwtData["euro"] === true);
-
   return (
     <StripeWrapper euro={jwtData["euro"] === true}>
       <Wrapper>

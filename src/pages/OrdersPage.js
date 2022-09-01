@@ -28,7 +28,6 @@ export default function OrdersPage() {
 }
 
 function orderRow({ row }) {
-  console.log("row", row);
   return (
     <TableRow key={row.uid} component={Link} to={`/orders/${row.id}`}>
       <TableCell component="th" scope="row">
