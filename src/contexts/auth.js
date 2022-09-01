@@ -110,13 +110,14 @@ export function AuthProvider({ children }) {
       setJwtData(decodedJWT);
       localStorage.setItem(localStorageJWTKey, data["authToken"]);
       setLoading(false);
-
+      console.log("decodedJWT", decodedJWT);
       if (decodedJWT["role"] === "admin") {
         navigate("/admin");
       } else {
         navigate("/");
       }
     } catch (err) {
+      console.log("error on auth", err);
       _handleError(err);
       setLoading(false);
     }
