@@ -24,7 +24,7 @@ const pages = [
 ];
 
 const ResponsiveAppBar = () => {
-  const { jwtData, logout } = useAuth();
+  const { jwtData, logout, swapBetweenContinent } = useAuth();
 
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
@@ -42,6 +42,10 @@ const ResponsiveAppBar = () => {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const handleContinentSwap = async () => {
+    await swapBetweenContinent();
   };
 
   return (
@@ -107,7 +111,6 @@ const ResponsiveAppBar = () => {
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
@@ -124,7 +127,7 @@ const ResponsiveAppBar = () => {
               textDecoration: "none",
             }}
           >
-            LOGO
+            LACEY
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map(({ label, url }) => (
@@ -165,6 +168,13 @@ const ResponsiveAppBar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
+              <MenuItem onClick={handleContinentSwap}>
+                <Typography textAlign="center">
+                  {jwtData["euro"]
+                    ? "Switch to North America"
+                    : "Swith to Europe"}
+                </Typography>
+              </MenuItem>
               <MenuItem onClick={logout}>
                 <Typography textAlign="center">Logout</Typography>
               </MenuItem>

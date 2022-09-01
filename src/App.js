@@ -18,6 +18,10 @@ import {
   Page404,
   Page500,
 } from "./pages";
+// import { loadStripe } from "@stripe/stripe-js";
+// import { Elements } from "@stripe/react-stripe-js";
+
+// const stripePromise = loadStripe(process.env.REACT_APP_NA_STRIPE_PUBLIC_KEY);
 
 function App() {
   return (

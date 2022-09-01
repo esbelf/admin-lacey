@@ -15,3 +15,50 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.StripeElement,
+.StripeElementIdeal,
+.StripeElementFpx {
+  @apply appearance-none block w-full bg-white border border-blue-400 rounded-lg py-3 px-4 mb-3 leading-tight;
+}
+
+.StripeElement--focus,
+.StripeElementIdeal--focus,
+.StripeElementFpx--focus {
+  @apply outline-none bg-white;
+}
+/*
+// .StripeElement.loading {
+//   height: 41.6px;
+//   opacity: 0.6;
+// }
+
+// .StripeElementIdeal,
+// .StripeElementFpx {
+//   padding: 0;
+// }
+*/
+
+.checkout__input {
+  @apply appearance-none block w-full bg-white text-gray-700 border border-blue-300 rounded-lg py-3 px-4 mb-3 leading-tight;
+  &:focus {
+    @apply outline-none bg-white;
+  }
+}
+.checkout__subheader {
+  @apply text-blue-300;
+}
+
+.checkout__button {
+  @apply bg-blue-300 text-white text-3xl border-blue-300 border-2 px-4 py-4 font-bold rounded-lg w-full my-2 flex flex-row justify-center;
+  &:disabled {
+    @apply opacity-50;
+    cursor: none !important;
+  }
+}
+
+.checkout__cardIcon {
+  @apply mr-3;
+  width: 2.5rem;
+  height: 2.5rem;
+}

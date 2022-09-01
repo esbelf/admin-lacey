@@ -1,12 +1,23 @@
 import React from "react";
-import { useOrder } from "../../contexts/order";
+import useAuth from "../../contexts/auth";
 import StripeCountryCodes from "./StripeCountryCodes";
+import StripeStateCodes from "./StripeStateCodes";
 import { TextField, Typography } from "@mui/material";
 
 export default function AddressForm({ type, setAddress, address }) {
+  const { jwtData } = useAuth();
+
   const handleAddressChange = (key) => (e) => {
-    setAddress({ ...address, key: e.target.value });
+    setAddress({ ...address, [key]: e.target.value });
   };
+  const handleStateChange = (obj) => {
+    setAddress({ ...address, state: obj.value });
+  };
+
+  const handleCountryChange = (obj) => {
+    setAddress({ ...address, state: null, country: obj.value });
+  };
+
   return (
     <div className="flex flex-col gap-y-2">
       <TextField
@@ -60,19 +71,33 @@ export default function AddressForm({ type, setAddress, address }) {
           onChange={handleAddressChange("postalCode")}
         />
       </div>
-      <TextField
-        id={`${type}State`}
-        label="State"
-        variant="outlined"
-        fullWidth
-        value={address["state"]}
-        onChange={handleAddressChange("state")}
-      />
+      {jwtData["euro"] === true ? (
+        <div className="w-full">
+          <TextField
+            id={`${type}State`}
+            label="State"
+            variant="outlined"
+            fullWidth
+            value={address["state"]}
+            onChange={handleAddressChange("state")}
+          />
+        </div>
+      ) : (
+        <div className="w-full">
+          <StripeStateCodes
+            name={`${type}State`}
+            value={address["state"]}
+            onChange={handleStateChange}
+            country={address["country"]}
+          />
+        </div>
+      )}
       <div className="w-full">
         <StripeCountryCodes
           name={`${type}Country`}
           value={address["country"]}
-          onChange={handleAddressChange("country")}
+          onChange={handleCountryChange}
+          euro={jwtData["euro"] === true}
         />
       </div>
     </div>

@@ -41,6 +41,15 @@ export function AuthProvider({ children }) {
     if (errorMessage) setErrorMessage(null);
   }, [location.pathname]);
 
+  async function swapBetweenContinent() {
+    const data = await postToApi({ endpoint: "/euro", body: {} });
+    setAuthToken(data["authToken"]);
+    const decodedJWT = jwt_decode(data["authToken"]);
+    setJwtData(decodedJWT);
+    localStorage.setItem(localStorageJWTKey, data["authToken"]);
+    console.log("swapBetweenContinent DATA", data);
+  }
+
   async function register({ email, password, passwordConfirmation }) {
     await _authenticatePost({
       endpoint: "/register",
@@ -110,7 +119,6 @@ export function AuthProvider({ children }) {
       setJwtData(decodedJWT);
       localStorage.setItem(localStorageJWTKey, data["authToken"]);
       setLoading(false);
-      console.log("decodedJWT", decodedJWT);
       if (decodedJWT["role"] === "admin") {
         navigate("/admin");
       } else {
@@ -154,6 +162,7 @@ export function AuthProvider({ children }) {
         logout,
         postToApi,
         register,
+        swapBetweenContinent,
       }}
     >
       {children}

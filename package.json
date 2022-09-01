@@ -5,13 +5,16 @@
   "dependencies": {
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
-    "@mui/icons-material": "^5.10.2",
+    "@mui/icons-material": "^5.10.3",
     "@mui/material": "^5.10.2",
+    "@stripe/react-stripe-js": "^1.10.0",
+    "@stripe/stripe-js": "^1.35.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
     "autoprefixer": "^10.4.8",
     "axios": "^0.27.2",
+    "camelize": "^1.0.0",
     "decamelize-keys": "^1.1.0",
     "humps": "^2.0.1",
     "jwt-decode": "^3.1.2",
@@ -23,7 +26,8 @@
     "react-scripts": "5.0.1",
     "react-select": "^5.4.0",
     "tailwindcss": "^3.1.8",
-    "web-vitals": "^2.1.0"
+    "web-vitals": "^2.1.0",
+    "zipcodes-nrviens": "^8.0.6"
   },
   "scripts": {
     "start": "react-scripts start",

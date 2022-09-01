@@ -1,10 +1,12 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
+import useAuth from "./auth";
 import decamelize from "decamelize-keys";
 import { isNil } from "lodash";
 
 export const OrderContext = createContext({});
 
 export const OrderProvider = ({ children }) => {
+  const { jwtData } = useAuth();
   const [billingAddress, setBillingAddress] = useState({});
   const [contactDetails, setContactDetails] = useState({});
   const [discountCode, setDiscountCode] = useState(null);
@@ -15,8 +17,9 @@ export const OrderProvider = ({ children }) => {
 
   useEffect(() => {
     async function loadCheckoutFromCookies() {
-      const saved = localStorage.getItem(process.env.REACT_APP_COOKIE_CHECKOUT);
-      const checkoutDetails = JSON.parse(saved);
+      // const saved = localStorage.getItem(process.env.REACT_APP_COOKIE_CHECKOUT);
+      // const checkoutDetails = JSON.parse(saved);
+      const checkoutDetails = null;
 
       if (checkoutDetails) {
         const data = checkoutDetails || {};
@@ -32,6 +35,12 @@ export const OrderProvider = ({ children }) => {
     }
     loadCheckoutFromCookies();
   }, []);
+
+  useEffect(() => {
+    setCart({});
+    setBillingAddress({});
+    setShippingAddress({});
+  }, [jwtData]);
 
   const saveCheckoutDetails = (data) => {
     localStorage.setItem(
@@ -80,19 +89,22 @@ export const OrderProvider = ({ children }) => {
       : shippingAddress;
     const billing_address = decamelize(tempBillingAddress, "_");
     const shipping_address = decamelize(shippingAddress, "_");
-
+    const cartIds = {};
+    Object.values(cart).forEach(({ product, quantity }) => {
+      cartIds[product.sku] = quantity;
+    });
     const params = {
-      cart,
+      cart: cartIds,
       contact: contactDetails,
       billing_address: {
         ...billing_address,
         email: contactDetails["email"],
         phone: contactDetails["phone"],
-        country: tempBillingAddress["country"]?.value,
+        country: tempBillingAddress["country"],
       },
       shipping_address: {
         ...shipping_address,
-        country: shippingAddress["country"]?.value,
+        country: shippingAddress["country"],
       },
     };
     if (!isNil(discountCode) && !isNil(discountCode["uid"])) {

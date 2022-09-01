@@ -1,25 +1,26 @@
 import React from "react";
 import Select from "react-select";
 
-export default function StripeCountryCodes({ name, onChange, value }) {
-  const countryCodes =
-    process.env.NEXT_PUBLIC_EURO !== "true"
-      ? northAmericanCountryCodes
-      : europeanCountryCodes;
+export default function StripeCountryCodes({ name, onChange, value, euro }) {
+  const countryCodes = euro ? europeanCountryCodes : northAmericanCountryCodes;
+
+  const options = countryCodes.map((countryRow) => ({
+    value: countryRow["code"],
+    label: countryRow["country"],
+  }));
   return (
     <Select
-      options={countryCodes.map((countryRow) => ({
-        value: countryRow["code"],
-        label: countryRow["country"],
-      }))}
+      options={options}
       onChange={onChange}
       placeholder={"Country"}
-      value={value}
+      value={options.find((option) => option.value === value)}
       name={name}
       classNamePrefix="react-select-country-codes"
       theme={(theme) => {
         return {
           ...theme,
+          zIndex: 20,
+          backgroundColor: "#fff",
           borderRadius: "0.5rem",
           borderColor: "#1e4858",
           borderWidth: 0,

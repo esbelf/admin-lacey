@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { isNil } from "lodash";
 import {
   Autocomplete,
@@ -16,6 +16,10 @@ export default function ProductForm({}) {
   const { jwtData } = useAuth();
   const { cart, setCartProductQuantity } = useOrder();
   const { data: products } = useApiFetch({ url: "/products" });
+
+  useEffect(() => {
+    setSelectedProduct(null);
+  }, [jwtData]);
 
   const [selectedProduct, setSelectedProduct] = useState();
 
@@ -71,6 +75,7 @@ export default function ProductForm({}) {
 }
 
 function ProductLineItem({ handleQuantityChange, product, quantity }) {
+  const currency = product.euro ? "EUR" : "USD";
   return (
     <div className="flex flex-row my-5">
       <div className="flex-grow flex flex-col justify-center">
@@ -90,7 +95,7 @@ function ProductLineItem({ handleQuantityChange, product, quantity }) {
       </div>
       <div className="flex-1 flex flex-col justify-center items-end">
         <Typography variant="h6">
-          {formatPrice(product.price * quantity)}
+          {formatPrice(product.price * quantity, currency)}
         </Typography>
       </div>
     </div>
