@@ -11,6 +11,8 @@ import {
   AdminPage,
   CustomersPage,
   DiscountsPage,
+  DiscountCreatePage,
+  DiscountShowPage,
   LoginPage,
   OrderCreatePage,
   OrdersPage,
@@ -52,6 +54,22 @@ function App() {
                 element={
                   <ProtectedAdminRoute>
                     <DiscountsPage />
+                  </ProtectedAdminRoute>
+                }
+              />
+              <Route
+                path="/discounts/new"
+                element={
+                  <ProtectedAdminRoute>
+                    <DiscountCreatePage />
+                  </ProtectedAdminRoute>
+                }
+              />
+              <Route
+                path="/discounts/:id"
+                element={
+                  <ProtectedAdminRoute>
+                    <DiscountShowPage />
                   </ProtectedAdminRoute>
                 }
               />

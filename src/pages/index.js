@@ -1,6 +1,8 @@
 export { default as AdminPage } from "./AdminPage";
 export { default as CustomersPage } from "./CustomersPage";
 export { default as DiscountsPage } from "./DiscountsPage";
+export { default as DiscountCreatePage } from "./DiscountCreatePage";
+export { default as DiscountShowPage } from "./DiscountShowPage";
 export { default as LoginPage } from "./LoginPage";
 export { default as OrderCreatePage } from "./OrderCreatePage";
 export { default as OrdersPage } from "./OrdersPage";

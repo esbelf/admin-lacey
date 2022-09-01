@@ -87,7 +87,7 @@ export function usePaginationApiFetch({ url, page, key }) {
         })
         .finally(() => setLoading(false));
     }
-  }, [url, page, key, initialLoad]);
+  }, [url, page, key, initialLoad, authToken]);
 
   return { data: Object.values(data), meta, loading };
 }

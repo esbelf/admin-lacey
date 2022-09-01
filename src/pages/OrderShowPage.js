@@ -1,9 +1,8 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { Wrapper } from "../components/admin";
+import { Wrapper, ShowAttribute, Grouping } from "../components/admin";
 import { useApiFetch } from "../hooks/api";
 import { Button, CircularProgress, Typography } from "@mui/material";
-import { isNil } from "lodash";
 import { formatPrice } from "../lib/currency";
 
 function OrderShowPage() {
@@ -162,31 +161,3 @@ function OrderShowPage() {
 }
 
 export default OrderShowPage;
-
-function Grouping({ title, children }) {
-  return (
-    <div className="flex flex-col mt-2">
-      <div className="flex">
-        <Typography variant="h5">{title}</Typography>
-      </div>
-      <div className="flex flex-col w-full my-1 min-w-fit border rounded border-blue-400 p-3">
-        {children}
-      </div>
-    </div>
-  );
-}
-
-function ShowAttribute({ title, value }) {
-  return (
-    <div className="flex flex-row my-1">
-      <div className="px-3 py-2 w-48">
-        <Typography>{title}</Typography>
-      </div>
-      <div className="bg-gray-100 px-3 py-1 rounded flex flex-col justify-center w-full">
-        <Typography>
-          {isNil(value) ? <span className="text-gray-500">Unkown</span> : value}
-        </Typography>
-      </div>
-    </div>
-  );
-}

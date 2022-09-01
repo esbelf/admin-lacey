@@ -17,7 +17,7 @@ export default function OrdersPage() {
           </Button>
         </div>
       </div>
-      <div className="my-5">Search Bar</div>
+      <div className="my-5">Search Bar to come</div>
       <Table
         url={"/orders"}
         paginationKey={"orders"}

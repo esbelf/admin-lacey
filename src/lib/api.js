@@ -30,6 +30,22 @@ export const sendCharge = async ({ params, authToken }) => {
   return res.data;
 };
 
+export const deleteCall = async ({ endpoint, authToken }) => {
+  const res = await axios.delete(
+    `${process.env.REACT_APP_API_HOST}${endpoint}`,
+    {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Credentials": true,
+      },
+    }
+  );
+  return res.data;
+};
+
 // export const validateDiscount = async (uid) => {
 //   const res = await axios.get(
 //     `${process.env.REACT_APP_API_HOST}/discounts/validate?uid=${uid}`,
