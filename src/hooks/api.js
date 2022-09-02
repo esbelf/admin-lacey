@@ -42,7 +42,7 @@ export function useApiFetch({ url }) {
   return { data, loading };
 }
 
-export function usePaginationApiFetch({ url, page, key }) {
+export function usePaginationApiFetch({ url, page, key, searchQuery }) {
   const { authToken, initialLoad } = useAuth();
   const { setErrorStatusCode } = useErrorStatus();
   const [data, setData] = useState({});
@@ -51,9 +51,14 @@ export function usePaginationApiFetch({ url, page, key }) {
 
   useEffect(() => {
     if (!initialLoad) {
-      const endpoint = isNil(page) ? url : `${url}?page=${page}`;
+      const searchUrl = new URL(`${process.env.REACT_APP_API_HOST}${url}`);
+      if (!isNil(page)) {
+        searchUrl.searchParams.append("page", page);
+      }
+      searchUrl.searchParams.append("search", searchQuery);
+
       axios
-        .get(`${process.env.REACT_APP_API_HOST}${endpoint}`, {
+        .get(searchUrl.href, {
           headers: {
             Authorization: `Bearer ${authToken}`,
             "Access-Control-Allow-Origin": "*",
@@ -63,13 +68,6 @@ export function usePaginationApiFetch({ url, page, key }) {
         .then(({ data }) => {
           console.log("API PAGINATION DATA", data[key], data["meta"]);
           const newData = camelizeKeys(data[key]);
-          // if (newData[key]) {
-          //   newData[key].forEach((obj) => {
-          //     if (isNil(data[obj["id"]])) {
-          //       data[obj["id"]] = obj;
-          //     }
-          //   });
-          // }
           setData(newData);
           if (isNil(data["meta"])) {
             setMeta({});
@@ -87,7 +85,7 @@ export function usePaginationApiFetch({ url, page, key }) {
         })
         .finally(() => setLoading(false));
     }
-  }, [url, page, key, initialLoad, authToken]);
+  }, [url, page, key, initialLoad, authToken, searchQuery]);
 
   return { data: Object.values(data), meta, loading };
 }

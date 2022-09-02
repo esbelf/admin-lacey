@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 import { useTheme } from "@mui/material/styles";
@@ -14,21 +14,27 @@ import {
   Paper,
   IconButton,
   Typography,
+  TextField,
+  InputAdornment,
 } from "@mui/material";
 
 import FirstPageIcon from "@mui/icons-material/FirstPage";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
+import SearchIcon from "@mui/icons-material/Search";
 
 import { usePaginationApiFetch } from "../../hooks/api";
 
 export default function TableWrapper({ url, paginationKey, customTableRow }) {
+  const [searchQuery, setSearchQuery] = useState("");
   const [page, setPage] = React.useState(1);
+
   const { data, loading, meta } = usePaginationApiFetch({
     page,
     url,
     key: paginationKey,
+    searchQuery,
   });
 
   const handleChangePage = (event, newPage) => {
@@ -43,38 +49,60 @@ export default function TableWrapper({ url, paginationKey, customTableRow }) {
       : 0;
 
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
-        <TableBody>
-          {data.map((row) => customTableRow({ row }))}
+    <React.Fragment>
+      <div className="my-4">
+        <TextField
+          id="table-search-bar"
+          onInput={(e) => {
+            setSearchQuery(e.target.value);
+          }}
+          label="Search"
+          variant="outlined"
+          placeholder="Search..."
+          size="medium"
+          fullWidth
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon className="text-blue-400" />
+              </InputAdornment>
+            ),
+          }}
+        />
+      </div>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
+          <TableBody>
+            {data.map((row) => customTableRow({ row }))}
 
-          {emptyRows > 0 && (
-            <TableRow style={{ height: 53 * emptyRows }}>
-              <TableCell colSpan={6} />
+            {emptyRows > 0 && (
+              <TableRow style={{ height: 53 * emptyRows }}>
+                <TableCell colSpan={6} />
+              </TableRow>
+            )}
+          </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TablePagination
+                colSpan={3}
+                count={meta["total_count"]}
+                page={page - 1}
+                SelectProps={{
+                  inputProps: {
+                    "aria-label": "rows per page",
+                  },
+                  native: true,
+                }}
+                onPageChange={handleChangePage}
+                rowsPerPage={process.env.REACT_APP_ROWS_PER_PAGE}
+                rowsPerPageOptions={[]}
+                ActionsComponent={TablePaginationActions}
+              />
             </TableRow>
-          )}
-        </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TablePagination
-              colSpan={3}
-              count={meta["total_count"]}
-              page={page - 1}
-              SelectProps={{
-                inputProps: {
-                  "aria-label": "rows per page",
-                },
-                native: true,
-              }}
-              onPageChange={handleChangePage}
-              rowsPerPage={process.env.REACT_APP_ROWS_PER_PAGE}
-              rowsPerPageOptions={[]}
-              ActionsComponent={TablePaginationActions}
-            />
-          </TableRow>
-        </TableFooter>
-      </Table>
-    </TableContainer>
+          </TableFooter>
+        </Table>
+      </TableContainer>
+    </React.Fragment>
   );
 }
 

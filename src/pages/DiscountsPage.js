@@ -17,17 +17,16 @@ export default function DiscountsPage() {
           </Button>
         </div>
       </div>
-      <div className="my-5">Search Bar to come</div>
       <Table
         url={"/discounts"}
         paginationKey={"discounts"}
-        customTableRow={orderRow}
+        customTableRow={discountRow}
       />
     </Wrapper>
   );
 }
 
-function orderRow({ row }) {
+function discountRow({ row }) {
   return (
     <TableRow key={row.id} component={Link} to={`/discounts/${row.id}`}>
       <TableCell component="th" scope="row">

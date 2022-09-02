@@ -10,17 +10,16 @@ export default function CustomersPage() {
           <Typography variant="h2">Customers</Typography>
         </div>
       </div>
-      <div className="my-5">Search Bar to come</div>
       <Table
         url={"/customers"}
         paginationKey={"customers"}
-        customTableRow={orderRow}
+        customTableRow={customerRow}
       />
     </Wrapper>
   );
 }
 
-function orderRow({ row }) {
+function customerRow({ row }) {
   return (
     <TableRow key={row.id}>
       <TableCell component="th" scope="row">
