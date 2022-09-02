@@ -9,7 +9,7 @@ import {
 } from "@stripe/react-stripe-js";
 
 import StripeCard from "./StripeCard";
-import Notification from "./Notification";
+import Notification from "../Notification";
 
 import { sendCharge } from "../../lib/api";
 import { validateBillingAddress } from "../../lib/validateForm";

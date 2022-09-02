@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import camelize from "camelize";
+// import camelize from "camelize";
+import { decamelizeKeys } from "humps";
 
 const headers = {
   headers: {
@@ -44,6 +45,28 @@ export const deleteCall = async ({ endpoint, authToken }) => {
     }
   );
   return res.data;
+};
+
+export const saveCall = async ({ endpoint, authToken, data }) => {
+  try {
+    const res = await axios.post(
+      `${process.env.REACT_APP_API_HOST}${endpoint}`,
+      decamelizeKeys(data),
+      {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true,
+        },
+      }
+    );
+
+    return res;
+  } catch (error) {
+    return error.response;
+  }
 };
 
 // export const validateDiscount = async (uid) => {
