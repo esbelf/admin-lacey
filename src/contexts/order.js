@@ -57,6 +57,7 @@ export const OrderProvider = ({ children }) => {
     } else if (field === "contactDetails") {
       setContactDetails(data);
     } else if (field === "discountCode") {
+      setDiscountCode(data);
     } else if (field === "shippingAddress") {
       setShippingAddress(data);
     }
@@ -81,6 +82,10 @@ export const OrderProvider = ({ children }) => {
       delete cart[product.id];
     }
     setCart({ ...cart });
+  };
+
+  const clearCart = () => {
+    setCart({});
   };
 
   const generateStripeBaseParams = (cart) => {
@@ -128,6 +133,7 @@ export const OrderProvider = ({ children }) => {
         shippingAddress,
 
         cart,
+        clearCart,
         setCartProductQuantity,
 
         generateStripeBaseParams,

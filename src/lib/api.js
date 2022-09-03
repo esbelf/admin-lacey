@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 // import camelize from "camelize";
-import { decamelizeKeys } from "humps";
+import { camelizeKeys, decamelizeKeys } from "humps";
 
 const headers = {
   headers: {
@@ -63,7 +63,7 @@ export const saveCall = async ({ endpoint, authToken, data }) => {
       }
     );
 
-    return res;
+    return camelizeKeys(res);
   } catch (error) {
     return error.response;
   }

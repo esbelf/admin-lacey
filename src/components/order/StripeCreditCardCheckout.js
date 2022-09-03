@@ -27,7 +27,7 @@ export default function StripeCreditCardCheckout({ products, children }) {
     discountCode,
     generateStripeBaseParams,
     cart,
-    setCart,
+    clearCart,
   } = useOrder();
   const { authToken } = useAuth();
 
@@ -114,7 +114,7 @@ export default function StripeCreditCardCheckout({ products, children }) {
         setErrorMessage(response.error);
       } else {
         const orderId = response.orderId;
-        setCart({});
+        clearCart();
         setErrorMessage(null);
 
         navigate(`/orders/${orderId}`);

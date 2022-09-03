@@ -5,6 +5,7 @@ import { Wrapper } from "../components/admin";
 import {
   AddressForm,
   ContactDetailForm,
+  DiscountForm,
   OrderSummary,
   ProductForm,
   StripeCreditCardCheckout,
@@ -52,16 +53,6 @@ function OrderCreatePage() {
             />
           </FormBlock>
 
-          <FormBlock title="Products">
-            <ProductForm />
-          </FormBlock>
-
-          {!isEmpty(cart) && (
-            <FormBlock title="Order Summary">
-              <OrderSummary />
-            </FormBlock>
-          )}
-
           <FormBlock title="Billing Address">
             <FormControlLabel
               control={
@@ -83,6 +74,20 @@ function OrderCreatePage() {
               />
             )}
           </FormBlock>
+
+          <FormBlock title="Products">
+            <ProductForm />
+          </FormBlock>
+
+          <FormBlock title="Discounts">
+            <DiscountForm />
+          </FormBlock>
+
+          {!isEmpty(cart) && (
+            <FormBlock title="Order Summary">
+              <OrderSummary />
+            </FormBlock>
+          )}
 
           <FormBlock title="Payment">
             <StripeCreditCardCheckout />
