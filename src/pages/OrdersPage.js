@@ -36,6 +36,9 @@ function orderRow({ row }) {
         {row.status}
       </TableCell>
       <TableCell style={{ width: 160 }} align="right">
+        {row.siteName}
+      </TableCell>
+      <TableCell style={{ width: 160 }} align="right">
         {formatPrice(row.totalCents, row.totalCurrency)}
       </TableCell>
     </TableRow>
