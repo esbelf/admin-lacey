@@ -31,6 +31,7 @@ export function AuthProvider({ children }) {
     const storedJWT = localStorage.getItem(localStorageJWTKey);
     if (!isNil(storedJWT)) {
       const decodedJWT = jwt_decode(storedJWT);
+      console.log("decodedJWT", decodedJWT);
       setJwtData(decodedJWT);
       setAuthToken(storedJWT);
     }
@@ -47,20 +48,6 @@ export function AuthProvider({ children }) {
     const decodedJWT = jwt_decode(data["authToken"]);
     setJwtData(decodedJWT);
     localStorage.setItem(localStorageJWTKey, data["authToken"]);
-    console.log("swapBetweenContinent DATA", data);
-  }
-
-  async function register({ email, password, passwordConfirmation }) {
-    await _authenticatePost({
-      endpoint: "/register",
-      body: {
-        user: {
-          email,
-          password,
-          passwordConfirmation,
-        },
-      },
-    });
   }
 
   async function login({ email, password }) {
@@ -122,7 +109,7 @@ export function AuthProvider({ children }) {
       if (decodedJWT["role"] === "admin") {
         navigate("/admin");
       } else {
-        navigate("/");
+        navigate("/your-orders");
       }
     } catch (err) {
       console.log("error on auth", err);
@@ -161,7 +148,6 @@ export function AuthProvider({ children }) {
         login,
         logout,
         postToApi,
-        register,
         swapBetweenContinent,
       }}
     >

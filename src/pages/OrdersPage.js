@@ -1,8 +1,8 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Wrapper, Table } from "../components/admin";
 import { Button, TableCell, TableRow, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
+import { formatPrice } from "../lib/currency";
 
 export default function OrdersPage() {
   return (
@@ -36,7 +36,7 @@ function orderRow({ row }) {
         {row.status}
       </TableCell>
       <TableCell style={{ width: 160 }} align="right">
-        {row.totalCents}
+        {formatPrice(row.totalCents, row.totalCurrency)}
       </TableCell>
     </TableRow>
   );

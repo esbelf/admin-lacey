@@ -9,16 +9,24 @@ import {
 } from "./components";
 import {
   AdminPage,
+  AdminDealersPage,
   CustomersPage,
+  DealerAccountPage,
+  DealerAddressesPage,
+  DealerOrderCreatePage,
+  DealerOrderShowPage,
+  DealerOrdersPage,
   DiscountsPage,
   DiscountCreatePage,
   DiscountShowPage,
+  ForgotPasswordPage,
   LoginPage,
   OrderCreatePage,
   OrdersPage,
   OrderShowPage,
   Page404,
   Page500,
+  ResetPasswordPage,
 } from "./pages";
 
 function App() {
@@ -39,6 +47,7 @@ function App() {
               />
               <Route
                 path="/customers"
+                exact
                 element={
                   <ProtectedAdminRoute>
                     <CustomersPage />
@@ -46,7 +55,17 @@ function App() {
                 }
               />
               <Route
+                path="/dealers"
+                exact
+                element={
+                  <ProtectedAdminRoute>
+                    <AdminDealersPage />
+                  </ProtectedAdminRoute>
+                }
+              />
+              <Route
                 path="/discounts"
+                exact
                 element={
                   <ProtectedAdminRoute>
                     <DiscountsPage />
@@ -55,6 +74,7 @@ function App() {
               />
               <Route
                 path="/discounts/new"
+                exact
                 element={
                   <ProtectedAdminRoute>
                     <DiscountCreatePage />
@@ -116,11 +136,11 @@ function App() {
               />
 
               <Route
-                path="/dealer"
-                exect
+                path="/dealer/addresses"
+                exact
                 element={
                   <ProtectedRoute>
-                    <DealerAccountPage />
+                    <DealerAddressesPage />
                   </ProtectedRoute>
                 }
               />
@@ -145,6 +165,24 @@ function App() {
                 }
               />
               <Route
+                path="/password"
+                exact
+                element={
+                  <UnauthenticatedRoute>
+                    <ForgotPasswordPage />
+                  </UnauthenticatedRoute>
+                }
+              />
+              <Route
+                path="/password/:token"
+                exact
+                element={
+                  <UnauthenticatedRoute>
+                    <ResetPasswordPage />
+                  </UnauthenticatedRoute>
+                }
+              />
+              <Route
                 path="/"
                 exact
                 element={
@@ -153,8 +191,6 @@ function App() {
                   </UnauthenticatedRoute>
                 }
               />
-
-              {/*<Route path="/register" exact element={<RegisterPage />} />*/}
 
               <Route element={<Page404 />} />
             </Routes>

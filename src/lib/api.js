@@ -69,6 +69,52 @@ export const saveCall = async ({ endpoint, authToken, data }) => {
   }
 };
 
+export const sendForgotPasswordEmail = async ({ email }) => {
+  try {
+    const res = await axios.post(
+      `${process.env.REACT_APP_API_HOST}/password/forgot`,
+      decamelizeKeys({ email }),
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true,
+        },
+      }
+    );
+
+    return camelizeKeys(res);
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const sendResetPassword = async ({
+  password,
+  passwordConfirmation,
+  token,
+}) => {
+  try {
+    const res = await axios.post(
+      `${process.env.REACT_APP_API_HOST}/password/reset`,
+      decamelizeKeys({ password, passwordConfirmation, token }),
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true,
+        },
+      }
+    );
+
+    return camelizeKeys(res);
+  } catch (error) {
+    return error.response;
+  }
+};
+
 // export const validateDiscount = async (uid) => {
 //   const res = await axios.get(
 //     `${process.env.REACT_APP_API_HOST}/discounts/validate?uid=${uid}`,

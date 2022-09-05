@@ -41,9 +41,9 @@ export default function DiscountForm() {
         discountAmount: discountAmount * 100,
         discountPercentage,
         minTotalAmountCents: 0,
+        randomGenerated: true,
       };
       const res = await saveCall({ endpoint: "/discounts", authToken, data });
-      console.log("res", res);
       setLoading(false);
       if (res.status === 400) {
         setErrorMessages(res.data["error_messages"]);
@@ -55,7 +55,6 @@ export default function DiscountForm() {
     }
   };
 
-  console.log("discountCode", discountCode);
   return (
     <React.Fragment>
       <div className="w-full flex flex-row gap-x-2">

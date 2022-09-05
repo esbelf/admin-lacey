@@ -49,7 +49,7 @@ export default function TableWrapper({ url, paginationKey, customTableRow }) {
       : 0;
 
   return (
-    <React.Fragment>
+    <div className="mb-10">
       <div className="my-4">
         <TextField
           id="table-search-bar"
@@ -102,7 +102,7 @@ export default function TableWrapper({ url, paginationKey, customTableRow }) {
           </TableFooter>
         </Table>
       </TableContainer>
-    </React.Fragment>
+    </div>
   );
 }
 

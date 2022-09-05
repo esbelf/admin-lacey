@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { sendForgotPasswordEmail } from "../lib/api";
+import { isNil } from "lodash";
+import { Notification } from "../components";
 import {
   Avatar,
   Button,
@@ -13,22 +16,26 @@ import {
   TextField,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import { Notification } from "../components";
-import useAuth from "../contexts/auth";
 
-export default function LoginPage() {
-  const { login, loading, errorMessage } = useAuth();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
+export default function ForgotPasswordPage() {
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState();
+  const [error, setError] = useState(false);
+  const [email, setEmail] = useState();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await login({
-      email: email,
-      password: password,
-    });
+    setLoading(true);
+    const res = await sendForgotPasswordEmail({ email });
+    const data = res.data;
+    if (!isNil(data.error)) {
+      setError(true);
+      setMessage(data.error);
+    } else {
+      setMessage("Password reset email was sent successfully");
+      setError(false);
+    }
+    setLoading(false);
   };
-
   return (
     <Container component="main" maxWidth="sm">
       <CssBaseline />
@@ -44,10 +51,10 @@ export default function LoginPage() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Forgot Password
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-          {errorMessage && <Notification boldText={errorMessage} />}
+          {message && <Notification boldText={message} success={!error} />}
           <TextField
             margin="normal"
             required
@@ -62,30 +69,19 @@ export default function LoginPage() {
               setEmail(e.currentTarget.value);
             }}
           />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            value={password}
-            onChange={(e) => setPassword(e.currentTarget.value)}
-          />
           <Button
             type="submit"
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            disabled={loading}
           >
-            Sign In
+            Send Reset Password Email
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link to="/password" variant="body2">
-                Forgot password?
+              <Link to="/login" variant="body2">
+                Back to login page
               </Link>
             </Grid>
           </Grid>

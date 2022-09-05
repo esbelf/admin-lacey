@@ -29,7 +29,7 @@ export default function ProtectedAdminRoute({ children }) {
     }
   }
   if (!isAuthenticated) {
-    return <Navigate to="/" />;
+    return <Navigate to="/login" />;
   }
   return children;
 }

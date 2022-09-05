@@ -25,8 +25,8 @@ export default function AddressForm({ type, setAddress, address }) {
         label="Full Name"
         variant="outlined"
         fullWidth
-        value={address["name"]}
-        onChange={handleAddressChange("name")}
+        value={address["fullName"]}
+        onChange={handleAddressChange("fullName")}
       />
 
       <TextField

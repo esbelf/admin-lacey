@@ -8,7 +8,6 @@ import { formatPrice } from "../lib/currency";
 function OrderShowPage() {
   const params = useParams();
   const { data: order, loading } = useApiFetch({ url: `/orders/${params.id}` });
-  console.log("order OrderShowPage", order, params.id);
 
   if (loading) {
     return (

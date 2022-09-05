@@ -17,10 +17,15 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 
-const pages = [
+const adminPages = [
   { label: "Orders", url: "orders" },
   { label: "Customers", url: "customers" },
   { label: "Discounts", url: "discounts" },
+];
+
+const dealerPages = [
+  { label: "Orders", url: "your-orders" },
+  { label: "Addresses", url: "dealer/addresses" },
 ];
 
 const ResponsiveAppBar = () => {
@@ -47,6 +52,8 @@ const ResponsiveAppBar = () => {
   const handleContinentSwap = async () => {
     await swapBetweenContinent();
   };
+
+  const pages = () => (jwtData["role"] === "admin" ? adminPages : dealerPages);
 
   return (
     <AppBar position="static">
@@ -99,7 +106,7 @@ const ResponsiveAppBar = () => {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map(({ label, url }) => (
+              {pages().map(({ label, url }) => (
                 <MenuItem
                   key={url}
                   onClick={handleCloseNavMenu}
@@ -130,7 +137,7 @@ const ResponsiveAppBar = () => {
             LACEY {jwtData["euro"] ? "EUROPE" : "NORTH AMERICA"}
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map(({ label, url }) => (
+            {pages().map(({ label, url }) => (
               <Button
                 key={url}
                 onClick={handleCloseNavMenu}
@@ -168,13 +175,15 @@ const ResponsiveAppBar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              <MenuItem onClick={handleContinentSwap}>
-                <Typography textAlign="center">
-                  {jwtData["euro"]
-                    ? "Switch to North America"
-                    : "Swith to Europe"}
-                </Typography>
-              </MenuItem>
+              {jwtData["role"] === "admin" && (
+                <MenuItem onClick={handleContinentSwap}>
+                  <Typography textAlign="center">
+                    {jwtData["euro"]
+                      ? "Switch to North America"
+                      : "Swith to Europe"}
+                  </Typography>
+                </MenuItem>
+              )}
               <MenuItem onClick={logout}>
                 <Typography textAlign="center">Logout</Typography>
               </MenuItem>

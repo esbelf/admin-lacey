@@ -18,8 +18,17 @@ export const validateShippingAddress = (shippingAddress) => {
   return null;
 };
 
+export const validateAddressHash = (address) => {
+  try {
+    validateAddress(address);
+  } catch (err) {
+    return err;
+  }
+  return null;
+};
+
 const validateAddress = (address) => {
-  if (validateString(address["name"])) {
+  if (validateString(address["fullName"])) {
     throw "Please fill out your Full Name";
   }
   if (validateString(address["addressLine1"])) {
