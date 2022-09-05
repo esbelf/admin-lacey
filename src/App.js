@@ -20,10 +20,6 @@ import {
   Page404,
   Page500,
 } from "./pages";
-// import { loadStripe } from "@stripe/stripe-js";
-// import { Elements } from "@stripe/react-stripe-js";
-
-// const stripePromise = loadStripe(process.env.REACT_APP_NA_STRIPE_PUBLIC_KEY);
 
 function App() {
   return (
@@ -99,6 +95,46 @@ function App() {
                   </ProtectedAdminRoute>
                 }
               />
+
+              <Route
+                path="/dealer/orders/new"
+                exact
+                element={
+                  <ProtectedRoute>
+                    <DealerOrderCreatePage />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/dealer/orders/:id"
+                element={
+                  <ProtectedRoute>
+                    <DealerOrderShowPage />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/dealer"
+                exect
+                element={
+                  <ProtectedRoute>
+                    <DealerAccountPage />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/your-orders"
+                exact
+                element={
+                  <ProtectedRoute>
+                    <DealerOrdersPage />
+                  </ProtectedRoute>
+                }
+              />
+
               <Route
                 path="/login"
                 exact
