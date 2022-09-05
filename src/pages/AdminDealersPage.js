@@ -1,6 +1,6 @@
 import React from "react";
 import { Wrapper, Table } from "../components/admin";
-import { Button, TableCell, TableRow, Typography } from "@mui/material";
+import { TableCell, TableRow, Typography } from "@mui/material";
 
 export default function AdminDealersPage() {
   return (

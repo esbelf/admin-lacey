@@ -1,16 +1,5 @@
-import { useState, useEffect } from "react";
 import axios from "axios";
-// import camelize from "camelize";
 import { camelizeKeys, decamelizeKeys } from "humps";
-
-const headers = {
-  headers: {
-    Accept: "application/json",
-    "Content-Type": "application/json",
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Credentials": true,
-  },
-};
 
 export const sendCharge = async ({ params, authToken }) => {
   const res = await axios.post(

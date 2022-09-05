@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
-import { Wrapper, ShowAttribute, Grouping } from "../components/admin";
+import { Wrapper } from "../components/admin";
 import { AddressForm } from "../components/order";
 import { Notification } from "../components";
 import { useApiFetch } from "../hooks/api";
@@ -19,7 +18,6 @@ export default function DealerAddressesPage() {
       </Wrapper>
     );
   }
-  console.log("data", data);
   return (
     <Wrapper>
       <div className="flex-1">
@@ -58,7 +56,7 @@ function AddressBlock({ title, type, initialAddress }) {
     } else {
       setErrorMessage();
     }
-    const res = await saveCall({
+    await saveCall({
       endpoint: `/dealer/addresses/${type}`,
       authToken,
       data: address,

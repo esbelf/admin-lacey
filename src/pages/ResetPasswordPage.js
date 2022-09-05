@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { sendResetPassword } from "../lib/api";
-import { useApiFetch } from "../hooks/api";
 import { isNil, isEmpty } from "lodash";
 import { Notification } from "../components";
 import {
@@ -9,8 +8,6 @@ import {
   Button,
   Container,
   CssBaseline,
-  FormControlLabel,
-  Checkbox,
   Grid,
   Box,
   Typography,

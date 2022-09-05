@@ -11,7 +11,6 @@ import {
   AdminPage,
   AdminDealersPage,
   CustomersPage,
-  DealerAccountPage,
   DealerAddressesPage,
   DealerOrderCreatePage,
   DealerOrderShowPage,

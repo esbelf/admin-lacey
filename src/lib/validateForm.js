@@ -29,22 +29,22 @@ export const validateAddressHash = (address) => {
 
 const validateAddress = (address) => {
   if (validateString(address["fullName"])) {
-    throw "Please fill out your Full Name";
+    throw new Error("Please fill out your Full Name");
   }
   if (validateString(address["addressLine1"])) {
-    throw "Please fill out your Address";
+    throw new Error("Please fill out your Address");
   }
   if (validateString(address["city"])) {
-    throw "Please fill out your City";
+    throw new Error("Please fill out your City");
   }
   if (validateString(address["postalCode"])) {
-    throw "Please fill out your Postal Code";
+    throw new Error("Please fill out your Postal Code");
   }
   if (validateString(address["state"])) {
-    throw "Please fill out your State or Providence";
+    throw new Error("Please fill out your State or Providence");
   }
   if (isNil(address["country"]) || isEmpty(address["country"])) {
-    throw "Please fill out your Country";
+    throw new Error("Please fill out your Country");
   }
 };
 

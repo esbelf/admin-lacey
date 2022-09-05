@@ -8,8 +8,6 @@ import {
   Button,
   Container,
   CssBaseline,
-  FormControlLabel,
-  Checkbox,
   Grid,
   Box,
   Typography,

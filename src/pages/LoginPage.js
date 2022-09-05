@@ -5,8 +5,6 @@ import {
   Button,
   Container,
   CssBaseline,
-  FormControlLabel,
-  Checkbox,
   Grid,
   Box,
   Typography,
@@ -79,6 +77,7 @@ export default function LoginPage() {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            disabled={loading}
           >
             Sign In
           </Button>

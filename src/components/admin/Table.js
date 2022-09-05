@@ -13,7 +13,6 @@ import {
   TableRow,
   Paper,
   IconButton,
-  Typography,
   TextField,
   InputAdornment,
 } from "@mui/material";
@@ -30,7 +29,7 @@ export default function TableWrapper({ url, paginationKey, customTableRow }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [page, setPage] = React.useState(1);
 
-  const { data, loading, meta } = usePaginationApiFetch({
+  const { data, meta } = usePaginationApiFetch({
     page,
     url,
     key: paginationKey,
@@ -108,7 +107,7 @@ export default function TableWrapper({ url, paginationKey, customTableRow }) {
 
 function TablePaginationActions(props) {
   const theme = useTheme();
-  const { count, page, pageSize, rowsPerPage, onPageChange } = props;
+  const { count, page, rowsPerPage, onPageChange } = props;
 
   const handleFirstPageButtonClick = (event) => {
     onPageChange(event, 0);

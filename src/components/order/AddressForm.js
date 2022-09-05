@@ -2,7 +2,7 @@ import React from "react";
 import useAuth from "../../contexts/auth";
 import StripeCountryCodes from "./StripeCountryCodes";
 import StripeStateCodes from "./StripeStateCodes";
-import { TextField, Typography } from "@mui/material";
+import { TextField } from "@mui/material";
 
 export default function AddressForm({ type, setAddress, address }) {
   const { jwtData } = useAuth();

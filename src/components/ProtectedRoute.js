@@ -1,5 +1,5 @@
 import React from "react";
-import { Navigate, Route } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import useAuth, { localStorageJWTKey, validateJwt } from "../contexts/auth";
 import jwt_decode from "jwt-decode";
 import { isNil } from "lodash";

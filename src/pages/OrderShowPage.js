@@ -2,7 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { Wrapper, ShowAttribute, Grouping } from "../components/admin";
 import { useApiFetch } from "../hooks/api";
-import { Button, CircularProgress, Typography } from "@mui/material";
+import { CircularProgress, Typography } from "@mui/material";
 import { formatPrice } from "../lib/currency";
 
 function OrderShowPage() {

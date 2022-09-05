@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Wrapper, Table } from "../components/admin";
 import { Button, TableCell, TableRow, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
