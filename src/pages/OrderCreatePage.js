@@ -31,6 +31,8 @@ function OrderCreatePage() {
     shippingAddress,
     setShippingAddress,
     cart,
+    contactDetails,
+    setContactDetails,
   } = useOrder();
   const { jwtData } = useAuth();
 
@@ -42,7 +44,10 @@ function OrderCreatePage() {
         </div>
         <div className="flex flex-wrap flex-col max-w-xl">
           <FormBlock title="Customer">
-            <ContactDetailForm />
+            <ContactDetailForm
+              contactDetails={contactDetails}
+              setContactDetails={setContactDetails}
+            />
           </FormBlock>
 
           <FormBlock title="Shipping Address">

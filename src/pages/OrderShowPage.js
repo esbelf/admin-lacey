@@ -1,10 +1,16 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { Wrapper, ShowAttribute, Grouping } from "../components/admin";
+import {
+  Wrapper,
+  ShowEditAttribute,
+  ShowAttribute,
+  Grouping,
+} from "../components/admin";
 import { useApiFetch } from "../hooks/api";
-import { CircularProgress, Typography } from "@mui/material";
+import { Button, CircularProgress, Typography } from "@mui/material";
 import { formatPrice } from "../lib/currency";
 import { isNil } from "lodash";
+import { Link } from "react-router-dom";
 
 function OrderShowPage() {
   const params = useParams();
@@ -19,11 +25,18 @@ function OrderShowPage() {
   }
   return (
     <Wrapper>
-      <div className="flex-1">
-        <Typography variant="h2">Order Detail</Typography>
+      <div className="flex-1 flex flex-row justify-betweenu">
+        <div className="flex-1">
+          <Typography variant="h2">Order Detail</Typography>
+        </div>
       </div>
       <Grouping title={"Customer"}>
-        <ShowAttribute title={"Email"} value={order["email"]} />
+        <ShowEditAttribute
+          title={"Email"}
+          attributeName={"email"}
+          savedValue={order["customer"]["email"]}
+          endpoint={`/customers/${order["customer"]["id"]}`}
+        />
         <ShowAttribute
           title={"Full Name"}
           value={order["customer"]["fullName"]}

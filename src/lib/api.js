@@ -58,6 +58,28 @@ export const saveCall = async ({ endpoint, authToken, data }) => {
   }
 };
 
+export const updateCall = async ({ endpoint, authToken, data }) => {
+  try {
+    const res = await axios.put(
+      `${process.env.REACT_APP_API_HOST}${endpoint}`,
+      decamelizeKeys(data),
+      {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true,
+        },
+      }
+    );
+
+    return camelizeKeys(res);
+  } catch (error) {
+    return error.response;
+  }
+};
+
 export const sendForgotPasswordEmail = async ({ email }) => {
   try {
     const res = await axios.post(

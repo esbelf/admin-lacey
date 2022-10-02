@@ -1,10 +1,10 @@
 import React from "react";
-import useOrder from "../../contexts/order";
 import { TextField, Typography } from "@mui/material";
 
-export default function ContactDetailForm({}) {
-  const { contactDetails, setContactDetails } = useOrder();
-
+export default function ContactDetailForm({
+  contactDetails,
+  setContactDetails,
+}) {
   const setValue = (key) => (event) => {
     setContactDetails({ ...contactDetails, [key]: event.target.value });
   };

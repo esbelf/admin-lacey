@@ -23,6 +23,7 @@ import {
   OrderCreatePage,
   OrdersPage,
   OrderShowPage,
+  OrderEditPage,
   Page404,
   Page500,
   ResetPasswordPage,
@@ -94,6 +95,14 @@ function App() {
                 element={
                   <ProtectedAdminRoute>
                     <OrderCreatePage />
+                  </ProtectedAdminRoute>
+                }
+              />
+              <Route
+                path="/orders/:id/edit"
+                element={
+                  <ProtectedAdminRoute>
+                    <OrderEditPage />
                   </ProtectedAdminRoute>
                 }
               />

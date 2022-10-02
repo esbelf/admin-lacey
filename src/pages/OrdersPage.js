@@ -26,11 +26,11 @@ export default function OrdersPage() {
   );
 }
 
-function orderRow({ row }) {
+function orderRow({ euro, row }) {
   return (
     <TableRow key={row.uid} component={Link} to={`/orders/${row.id}`}>
       <TableCell component="th" scope="row">
-        {row.shipstationKey}
+        {euro ? row.uid : row.shipstationKey}
       </TableCell>
       <TableCell style={{ width: 160 }} align="right">
         {row.status}
