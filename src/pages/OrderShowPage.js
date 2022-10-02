@@ -4,6 +4,7 @@ import { Wrapper, ShowAttribute, Grouping } from "../components/admin";
 import { useApiFetch } from "../hooks/api";
 import { CircularProgress, Typography } from "@mui/material";
 import { formatPrice } from "../lib/currency";
+import { isNil } from "lodash";
 
 function OrderShowPage() {
   const params = useParams();
@@ -58,6 +59,16 @@ function OrderShowPage() {
             order["discountAmountCurrency"]
           )}
         />
+        {!isNil(order["refundAmountCents"]) &&
+          order["refundAmountCents"] !== 0 && (
+            <ShowAttribute
+              title={"Refund"}
+              value={formatPrice(
+                order["refundAmountCents"],
+                order["refundAmountCurrency"]
+              )}
+            />
+          )}
         <ShowAttribute
           title={"Total"}
           value={formatPrice(order["totalCents"], order["totalCurrency"])}
