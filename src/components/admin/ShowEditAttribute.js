@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Button, TextField, Typography } from "@mui/material";
 import { isNil } from "lodash";
 import useAuth from "../../contexts/auth";
+import useNotification from "../../contexts/notification";
 import { updateCall } from "../../lib/api";
 import Notification from "../Notification";
 
@@ -13,12 +14,13 @@ export default function ShowEditAttribute({
   endpoint,
 }) {
   const { jwtData, authToken } = useAuth();
+  const { setErrorMessage, setSuccessMessage } = useNotification();
 
   const [editAttribute, setEditAttribute] = useState(false);
+  const [resetValue, setResetValue] = useState(savedValue);
   const [value, setValue] = useState(savedValue);
 
   const [loading, setLoading] = useState(false);
-  const [errorMessages, setErrorMessages] = useState(null);
 
   const onSave = async (e) => {
     e.preventDefault();
@@ -32,9 +34,11 @@ export default function ShowEditAttribute({
     });
     setLoading(false);
     if (res.status === 400) {
-      setErrorMessages(res.data["error_messages"]);
+      setErrorMessage(res.data["error_messages"]);
     } else {
-      // TODO: tell user it was successful
+      setSuccessMessage("Saved!");
+      console.log(res.data);
+      setResetValue(res.data[attributeName]);
     }
   };
 
@@ -80,20 +84,13 @@ export default function ShowEditAttribute({
             variant="contained"
             onClick={() => {
               setEditAttribute(!editAttribute);
-              setValue(savedValue);
+              setValue(resetValue);
             }}
             color="secondary"
           >
             {editAttribute ? "Cancel" : "Edit"}
           </Button>
         </div>
-      </div>
-      <div className="flex-1">
-        {!isNil(errorMessages) && (
-          <div className="my-2">
-            <Notification smallText={errorMessages[0]} />
-          </div>
-        )}
       </div>
     </div>
   );
