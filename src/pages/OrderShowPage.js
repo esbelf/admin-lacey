@@ -6,6 +6,18 @@ import { CircularProgress, Typography } from "@mui/material";
 import { formatPrice } from "../lib/currency";
 import { isNil } from "lodash";
 
+function padTo2Digits(num) {
+  return num.toString().padStart(2, "0");
+}
+
+function formatDate(date) {
+  return [
+    padTo2Digits(date.getDate()),
+    padTo2Digits(date.getMonth() + 1),
+    date.getFullYear(),
+  ].join("/");
+}
+
 function OrderShowPage() {
   const params = useParams();
   const { data: order, loading } = useApiFetch({ url: `/orders/${params.id}` });
@@ -34,6 +46,10 @@ function OrderShowPage() {
         />
       </Grouping>
       <Grouping title={"Receipt"}>
+        <ShowAttribute
+          title={"Order Date"}
+          value={formatDate(new Date(order["createdAt"]))}
+        />
         <ShowAttribute
           title={"Subtotal"}
           value={formatPrice(order["subtotalCents"], order["subtotalCurrency"])}
