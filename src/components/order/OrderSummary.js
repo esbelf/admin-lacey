@@ -14,41 +14,53 @@ import { formatPrice, priceBreakDown } from "../../lib/currency";
 
 export default function OrderSummary() {
   const { jwtData } = useAuth();
-  const { cart, discountCode, shippingAddress } = useOrder();
+  const {
+    cart,
+    convertCurrency,
+    currency,
+    discountCode,
+    includeVat,
+    shippingAddress,
+    shippingCost,
+  } = useOrder();
 
   const { subtotal, shippingTotal, discount, salesTax, total } = priceBreakDown(
-    { cart, discountCode, shippingAddress }
+    { cart, discountCode, includeVat, shippingAddress, shippingCost }
   );
-
-  const currency = jwtData["euro"] ? "EUR" : "USD";
 
   return (
     <div>
       <div className="flex flex-row gap-x-2">
-        <LineItem title={"Subtotal"} value={formatPrice(subtotal, currency)} />
+        <LineItem
+          title={"Subtotal"}
+          value={formatPrice(convertCurrency(subtotal), currency)}
+        />
       </div>
       <div className="flex flex-row gap-x-2">
         <LineItem
           title={"Discount"}
-          value={formatPrice(discount || 0, currency)}
+          value={formatPrice(convertCurrency(discount || 0), currency)}
           red
         />
       </div>
       <div className="flex flex-row gap-x-2">
         <LineItem
-          title={jwtData["euro"] ? "VAT" : "Sales Tax"}
-          value={formatPrice(salesTax, currency)}
+          title="Shipping Total"
+          value={formatPrice(convertCurrency(shippingTotal), currency)}
         />
       </div>
       <div className="flex flex-row gap-x-2">
         <LineItem
-          title="Shipping Total"
-          value={formatPrice(shippingTotal, currency)}
+          title={jwtData["euro"] ? "VAT" : "Sales Tax"}
+          value={formatPrice(convertCurrency(salesTax), currency)}
         />
       </div>
 
       <div className="flex flex-row gap-x-2">
-        <LineItem title={"Total"} value={formatPrice(total, currency)} />
+        <LineItem
+          title={"Total"}
+          value={formatPrice(convertCurrency(total), currency)}
+        />
       </div>
     </div>
   );

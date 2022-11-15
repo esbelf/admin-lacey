@@ -37,7 +37,7 @@ export default function DiscountForm() {
       const data = {
         uid: uuidv4(),
         discountType,
-        discountAmount: discountAmount * 100,
+        discountAmount: discountAmount,
         discountPercentage,
         minTotalAmountCents: 0,
         randomGenerated: true,
@@ -94,11 +94,7 @@ export default function DiscountForm() {
                 fullWidth
                 type="number"
                 disabled={discountType === "percentage"}
-                startAdornment={
-                  <InputAdornment position="start">
-                    {jwtData["euro"] ? "€" : "$"}
-                  </InputAdornment>
-                }
+                helperText={"Amount in cents"}
               />
             ) : (
               <TextField

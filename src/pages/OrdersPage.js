@@ -30,7 +30,7 @@ function orderRow({ euro, row }) {
   return (
     <TableRow key={row.uid} component={Link} to={`/orders/${row.id}`}>
       <TableCell component="th" scope="row">
-        {euro ? row.uid : row.shipstationKey}
+        {euro ? row.orderNumber : row.shipstationKey}
       </TableCell>
       <TableCell style={{ width: 160 }} align="right">
         {row.status}

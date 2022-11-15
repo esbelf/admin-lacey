@@ -6,6 +6,7 @@ import useAuth from "../../contexts/auth";
 import useNotification from "../../contexts/notification";
 import { updateCall } from "../../lib/api";
 import Notification from "../Notification";
+import StripeCountryCodes from "../order/StripeCountryCodes";
 
 export default function ShowEditAttribute({
   title,
@@ -54,13 +55,16 @@ export default function ShowEditAttribute({
           } px-3 py-1 rounded flex flex-col justify-center w-full`}
         >
           {editAttribute ? (
-            <TextField
+            <StripeCountryCodes
+              euro={jwtData["euro"]}
               id={attributeName}
-              label={title}
+              name={title}
               variant="outlined"
               fullWidth
               value={value}
-              onChange={(e) => setValue(e.target.value)}
+              onChange={(obj) => {
+                setValue(obj.value);
+              }}
             />
           ) : (
             <Typography>

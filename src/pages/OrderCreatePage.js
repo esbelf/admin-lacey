@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { isEmpty } from "lodash";
+import { useNavigate } from "react-router-dom";
 import { StripeWrapper } from "../components";
 import { Wrapper } from "../components/admin";
 import {
@@ -9,12 +10,15 @@ import {
   OrderSummary,
   ProductForm,
   StripeCreditCardCheckout,
+  StripeCurrencyCodes,
+  StripeInvoice,
 } from "../components/order";
 import {
   Autocomplete,
   Button,
   Checkbox,
   FormControlLabel,
+  InputAdornment,
   TextField,
   Typography,
 } from "@mui/material";
@@ -33,6 +37,12 @@ function OrderCreatePage() {
     cart,
     contactDetails,
     setContactDetails,
+    includeVat,
+    setIncludeVat,
+    shippingCost,
+    setShippingCost,
+    currency,
+    setCurrency,
   } = useOrder();
   const { jwtData } = useAuth();
 
@@ -88,13 +98,63 @@ function OrderCreatePage() {
             <DiscountForm />
           </FormBlock>
 
+          <FormBlock title="Meta Details">
+            <div className="flex-1">
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={includeVat}
+                    onChange={(e) => {
+                      setIncludeVat(e.target.checked);
+                    }}
+                    name="includeVat"
+                  />
+                }
+                label="include VAT"
+              />
+            </div>
+            <div className="flex-1 mt-4 flex flex-row">
+              <div className="flex-grow">
+                <StripeCurrencyCodes
+                  name="currency"
+                  value={currency}
+                  onChange={(obj) => setCurrency(obj.value)}
+                />
+              </div>
+            </div>
+            <div className="flex-1 mt-4">
+              <TextField
+                label="Shipping"
+                variant="outlined"
+                value={shippingCost}
+                onChange={(e) => {
+                  const newValue = e.target.value;
+                  if (newValue >= 0) {
+                    setShippingCost(parseInt(e.target.value));
+                  }
+                }}
+                fullWidth
+                type="number"
+                helperText={"Amount in cents"}
+              />
+            </div>
+          </FormBlock>
+
           {!isEmpty(cart) && (
             <FormBlock title="Order Summary">
               <OrderSummary />
             </FormBlock>
           )}
 
-          <FormBlock title="Payment">
+          <FormBlock title="Create Invoice">
+            <StripeInvoice />
+          </FormBlock>
+
+          <div className="flex-1">
+            <Typography variant="h4">OR</Typography>
+          </div>
+
+          <FormBlock title="Charge Customer">
             <StripeCreditCardCheckout />
           </FormBlock>
         </div>

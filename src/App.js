@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./contexts/auth";
 import { ErrorHandlerProvider } from "./contexts/errorHandler";
-import { NotificationProvider } from "./contexts/notification"
+import { NotificationProvider } from "./contexts/notification";
 import { OrderProvider } from "./contexts/order";
 import {
   ProtectedRoute,
@@ -24,7 +24,6 @@ import {
   OrderCreatePage,
   OrdersPage,
   OrderShowPage,
-  OrderEditPage,
   Page404,
   Page500,
   ResetPasswordPage,
@@ -34,9 +33,9 @@ function App() {
   return (
     <BrowserRouter>
       <ErrorHandlerProvider>
-        <AuthProvider>
-          <OrderProvider>
-            <NotificationProvider>
+        <NotificationProvider>
+          <AuthProvider>
+            <OrderProvider>
               <Routes>
                 <Route
                   path="/admin"
@@ -97,14 +96,6 @@ function App() {
                   element={
                     <ProtectedAdminRoute>
                       <OrderCreatePage />
-                    </ProtectedAdminRoute>
-                  }
-                />
-                <Route
-                  path="/orders/:id/edit"
-                  element={
-                    <ProtectedAdminRoute>
-                      <OrderEditPage />
                     </ProtectedAdminRoute>
                   }
                 />
@@ -204,9 +195,9 @@ function App() {
 
                 <Route element={<Page404 />} />
               </Routes>
-            </NotificationProvider>
-          </OrderProvider>
-        </AuthProvider>
+            </OrderProvider>
+          </AuthProvider>
+        </NotificationProvider>
       </ErrorHandlerProvider>
     </BrowserRouter>
   );

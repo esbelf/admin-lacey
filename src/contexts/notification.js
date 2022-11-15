@@ -17,14 +17,14 @@ export function NotificationProvider({ children }) {
   const [error, setError] = useState(false);
   const [message, setMessage] = useState();
 
-  const setErrorMessage = (message) => {
-    setMessage(message);
+  const setErrorMessage = (newMessage) => {
+    setMessage(newMessage);
     setError(true);
     setOpen(true);
   };
 
-  const setSuccessMessage = (message) => {
-    setMessage(message);
+  const setSuccessMessage = (newMessage) => {
+    setMessage(newMessage);
     setError(false);
     setOpen(true);
   };

@@ -28,6 +28,7 @@ export default function StripeCreditCardCheckout({ products, children }) {
     generateStripeBaseParams,
     cart,
     clearCart,
+    validateOrderParams,
   } = useOrder();
   const { authToken } = useAuth();
 
@@ -56,7 +57,7 @@ export default function StripeCreditCardCheckout({ products, children }) {
   };
 
   const sendPaymentIdToServer = async (paymentMethod) => {
-    const params = generateStripeBaseParams(cart);
+    const params = generateStripeBaseParams();
     params["payment_method_type"] = "card";
     params["payment_method_id"] = paymentMethod.id;
     const data = await sendCharge({ params, authToken });
@@ -73,7 +74,7 @@ export default function StripeCreditCardCheckout({ products, children }) {
         error: errorAction,
       };
     }
-    const params = generateStripeBaseParams(cart);
+    const params = generateStripeBaseParams();
     params["payment_method_type"] = "card";
     params["payment_intent_id"] = paymentIntent.id;
     const result = await sendCharge({ params, authToken });
@@ -84,6 +85,11 @@ export default function StripeCreditCardCheckout({ products, children }) {
     try {
       event.preventDefault();
       setProcessing(true);
+
+      if (!validateOrderParams()) {
+        setProcessing(false);
+        return;
+      }
 
       const billingAddressError = validateBillingAddress(billingAddress);
       if (billingAddressError) {
@@ -145,7 +151,7 @@ export default function StripeCreditCardCheckout({ products, children }) {
             className="checkout__button"
             disabled={!stripe || processing}
           >
-            <CreditCardIcon fontSize="large" color="primary" />
+            <CreditCardIcon fontSize="large" color="white" />
             <span className="ml-2 mt-5px">Charge Card</span>
           </button>
         </form>
@@ -157,9 +163,9 @@ export default function StripeCreditCardCheckout({ products, children }) {
 function generateBillingDetails(billingAddress) {
   return {
     billing_details: {
-      name: billingAddress.name,
+      name: billingAddress.fullName,
       email: billingAddress.email,
-      phone: billingAddress.phone,
+      phone: billingAddress.phoneNumber,
       address: {
         line1: billingAddress.addressLine1,
         line2: billingAddress.addressLine2,

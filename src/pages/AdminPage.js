@@ -38,7 +38,6 @@ export default function AdminPage() {
 }
 
 function calculateTotalByMatType(orders) {
-  console.log("calculdate", orders);
   const data = {};
   orders.forEach((order) => {
     // order.order_line_items.forEach((item) => {

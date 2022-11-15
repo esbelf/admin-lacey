@@ -126,6 +126,27 @@ export const sendResetPassword = async ({
   }
 };
 
+export const fetchCurrencyRate = async ({ currency, token }) => {
+  try {
+    const res = await axios.get(
+      `${process.env.REACT_APP_API_HOST}/products/currency_rate?currency=${currency}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true,
+        },
+      }
+    );
+
+    return camelizeKeys(res);
+  } catch (error) {
+    return { error: error.response };
+  }
+};
+
 // export const validateDiscount = async (uid) => {
 //   const res = await axios.get(
 //     `${process.env.REACT_APP_API_HOST}/discounts/validate?uid=${uid}`,
