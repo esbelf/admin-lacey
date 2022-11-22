@@ -54,7 +54,7 @@ function OrderShowPage() {
           <div className="mr-1">
             <Button
               variant="contained"
-              href={`${process.env.REACT_APP_API_HOST}/orders/${order.uid}/receipt?lang=en`}
+              href={`${process.env.REACT_APP_API_HOST}/orders/${order.id}/receipt?lang=en`}
               color="primary"
               el="noopener noreferrer"
               target="_blank"
@@ -66,7 +66,7 @@ function OrderShowPage() {
           <div className="">
             <Button
               variant="contained"
-              href={`${process.env.REACT_APP_API_HOST}/orders/${order.uid}/receipt?lang=es`}
+              href={`${process.env.REACT_APP_API_HOST}/orders/${order.id}/receipt?lang=es`}
               color="primary"
               el="noopener noreferrer"
               target="_blank"
