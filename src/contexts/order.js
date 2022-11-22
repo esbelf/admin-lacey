@@ -54,7 +54,8 @@ export const OrderProvider = ({ children }) => {
     // setCart({});
     // setBillingAddress({});
     // setShippingAddress({});
-    setCurrency(jwtData["euro"] ? "EUR" : "USD");
+    setCurrency(!isEmpty(jwtData) && !jwtData["euro"] ? "USD" : "EUR");
+    console.log("current currency", currency);
   }, [jwtData]);
 
   useEffect(() => {
@@ -62,12 +63,20 @@ export const OrderProvider = ({ children }) => {
       if (isNil(authToken)) {
         return;
       }
+      console.log("currency", currency, jwtData["euro"]);
+      if (currency === "EUR" && jwtData["euro"]) {
+        setCurrency("EUR");
+        setCurrencyRate(1);
+      } else if (currency === "USD" && !jwtData["euro"]) {
+        setCurrency("USD");
+        setCurrencyRate(1);
+      }
       const { data } = await fetchCurrencyRate({
         currency: currency,
         token: authToken,
       });
       if (data["error"]) {
-        setCurrency("EUR");
+        setCurrency(jwtData["euro"] ? "EUR" : "USD");
         setCurrencyRate(1);
       } else {
         setCurrencyRate(data["rate"]);

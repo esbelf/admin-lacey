@@ -129,7 +129,7 @@ export const sendResetPassword = async ({
 export const fetchCurrencyRate = async ({ currency, token }) => {
   try {
     const res = await axios.get(
-      `${process.env.REACT_APP_API_HOST}/products/currency_rate?currency=${currency}`,
+      `${process.env.REACT_APP_API_HOST}/meta_data/currency_rate?currency=${currency}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

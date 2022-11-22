@@ -39,7 +39,7 @@ function orderRow({ euro, row }) {
         {row.siteName}
       </TableCell>
       <TableCell style={{ width: 160 }} align="right">
-        {formatPrice(row.totalCents, row.totalCurrency)}
+        {formatPrice(row.chargeAmountCents, row.chargeAmountCurrency)}
       </TableCell>
     </TableRow>
   );

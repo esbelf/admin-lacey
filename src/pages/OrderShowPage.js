@@ -28,6 +28,11 @@ function OrderShowPage() {
       </Wrapper>
     );
   }
+
+  const stripePaymentUrl =
+    process.env.NODE_ENV === "production"
+      ? `https://dashboard.stripe.com/payments/${order.uid}`
+      : `https://dashboard.stripe.com/test/payments/${order.uid}`;
   return (
     <Wrapper>
       <div className="flex-1 flex flex-row justify-between mt-2">
@@ -38,7 +43,7 @@ function OrderShowPage() {
           <div className="mr-1">
             <Button
               variant="contained"
-              href={`https://dashboard.stripe.com/payments/${order.uid}`}
+              href={stripePaymentUrl}
               color="secondary"
               el="noopener noreferrer"
               target="_blank"
@@ -95,47 +100,35 @@ function OrderShowPage() {
       <Grouping title={"Receipt"}>
         <ShowAttribute
           title={"Subtotal"}
-          value={formatPrice(order["subtotalCents"], order["subtotalCurrency"])}
+          value={formatPrice(order["subtotalCents"], order["currency"])}
         />
         <ShowAttribute
           title={"Shipping"}
-          value={formatPrice(
-            order["shippingCostCents"],
-            order["shippingCostCurrency"]
-          )}
+          value={formatPrice(order["shippingCostCents"], order["currency"])}
         />
         <ShowAttribute
           title={"Tax"}
-          value={formatPrice(
-            order["taxAmountCents"],
-            order["taxAmountCurrency"]
-          )}
+          value={formatPrice(order["taxAmountCents"], order["currency"])}
         />
         <ShowAttribute
           title={"Discount"}
-          value={formatPrice(
-            order["discountAmountCents"],
-            order["discountAmountCurrency"]
-          )}
+          value={formatPrice(order["discountAmountCents"], order["currency"])}
         />
         {!isNil(order["refundAmountCents"]) &&
           order["refundAmountCents"] !== 0 && (
             <ShowAttribute
               title={"Refund"}
-              value={formatPrice(
-                order["refundAmountCents"],
-                order["refundAmountCurrency"]
-              )}
+              value={formatPrice(order["refundAmountCents"], order["currency"])}
             />
           )}
         <ShowAttribute
           title={"Total"}
-          value={formatPrice(order["totalCents"], order["totalCurrency"])}
+          value={formatPrice(order["totalCents"], order["currency"])}
         />
       </Grouping>
       <Grouping title={"Products"}>
-        {order.orderLineItems.map((item) => (
-          <div className="flex flex-row my-2">
+        {order.orderLineItems.map((item, index) => (
+          <div className="flex flex-row my-2" key={index}>
             <div className="flex-1 flex flex-col justify-center">
               <Typography variant="h6">{item.product.name}</Typography>
             </div>
@@ -248,6 +241,13 @@ function OrderShowPage() {
       </Grouping>
       <Grouping title="Extra Details">
         <ShowAttribute title={"UID"} value={order.uid} />
+        <ShowAttribute
+          title={"Charged Customer"}
+          value={formatPrice(
+            order.chargeAmountCents,
+            order.chargeAmountCurrency
+          )}
+        />
         <ShowAttribute
           title={"Stripe Cost"}
           value={formatPrice(order.stripeFeeCents, order.stripeFeeCurrency)}
