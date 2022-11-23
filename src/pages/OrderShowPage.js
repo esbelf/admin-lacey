@@ -29,10 +29,6 @@ function OrderShowPage() {
     );
   }
 
-  const stripePaymentUrl =
-    process.env.NODE_ENV === "production"
-      ? `https://dashboard.stripe.com/payments/${order.uid}`
-      : `https://dashboard.stripe.com/test/payments/${order.uid}`;
   return (
     <Wrapper>
       <div className="flex-1 flex flex-row justify-between mt-2">
@@ -41,15 +37,7 @@ function OrderShowPage() {
         </div>
         <div className="flex-1 flex flex-row justify-end items-center">
           <div className="mr-1">
-            <Button
-              variant="contained"
-              href={stripePaymentUrl}
-              color="secondary"
-              el="noopener noreferrer"
-              target="_blank"
-            >
-              <StoreIcon />
-            </Button>
+            <StripeButton order={order} />
           </div>
           <div className="mr-1">
             <Button
@@ -270,6 +258,46 @@ function OrderShowPage() {
       </Grouping>
     </Wrapper>
   );
+}
+
+function StripeButton({ order }) {
+  if (!isNil(order.uid)) {
+    const stripePaymentUrl =
+      process.env.NODE_ENV === "production"
+        ? `https://dashboard.stripe.com/payments/${order.uid}`
+        : `https://dashboard.stripe.com/test/payments/${order.uid}`;
+
+    return (
+      <Button
+        variant="contained"
+        href={stripePaymentUrl}
+        color="secondary"
+        el="noopener noreferrer"
+        target="_blank"
+      >
+        <StoreIcon />
+      </Button>
+    );
+  } else if (!isNil(order.stripeInvoiceId)) {
+    const stripeInvoiceUrl =
+      process.env.NODE_ENV === "production"
+        ? `https://dashboard.stripe.com/invoices/${order.stripeInvoiceId}`
+        : `https://dashboard.stripe.com/test/invoices/${order.stripeInvoiceId}`;
+
+    return (
+      <Button
+        variant="contained"
+        href={stripeInvoiceUrl}
+        color="secondary"
+        el="noopener noreferrer"
+        target="_blank"
+      >
+        <StoreIcon />
+      </Button>
+    );
+  }
+
+  return <React.Fragment />;
 }
 
 export default OrderShowPage;

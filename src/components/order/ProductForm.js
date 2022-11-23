@@ -15,7 +15,8 @@ import { formatPrice } from "../../lib/currency";
 export default function ProductForm({}) {
   const { jwtData } = useAuth();
   const { cart, setCartProductQuantity } = useOrder();
-  const { data: products } = useApiFetch({ url: "/products" });
+  const { data } = useApiFetch({ url: "/products" });
+  const products = data.products || [];
 
   useEffect(() => {
     setSelectedProduct(null);

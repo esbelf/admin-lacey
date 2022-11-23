@@ -25,7 +25,7 @@ export default function AddressForm({ type, setAddress, address }) {
         label="Full Name"
         variant="outlined"
         fullWidth
-        value={address["fullName"]}
+        value={address["fullName"] || ""}
         onChange={handleAddressChange("fullName")}
       />
 
@@ -34,7 +34,7 @@ export default function AddressForm({ type, setAddress, address }) {
         label="Company Name"
         variant="outlined"
         fullWidth
-        value={address["companyName"]}
+        value={address["companyName"] || ""}
         onChange={handleAddressChange("companyName")}
       />
       <TextField
@@ -42,7 +42,7 @@ export default function AddressForm({ type, setAddress, address }) {
         label="Address Line 1"
         variant="outlined"
         fullWidth
-        value={address["addressLine1"]}
+        value={address["addressLine1"] || ""}
         onChange={handleAddressChange("addressLine1")}
       />
       <TextField
@@ -50,7 +50,7 @@ export default function AddressForm({ type, setAddress, address }) {
         label="Address Line 2"
         variant="outlined"
         fullWidth
-        value={address["addressLine2"]}
+        value={address["addressLine2"] || ""}
         onChange={handleAddressChange("addressLine2")}
       />
       <div className="flex flex-row justify-start gap-x-2">
@@ -59,7 +59,7 @@ export default function AddressForm({ type, setAddress, address }) {
           label="City"
           variant="outlined"
           fullWidth
-          value={address["city"]}
+          value={address["city"] || ""}
           onChange={handleAddressChange("city")}
         />
         <TextField
@@ -67,7 +67,7 @@ export default function AddressForm({ type, setAddress, address }) {
           label="Postal Code"
           variant="outlined"
           fullWidth
-          value={address["postalCode"]}
+          value={address["postalCode"] || ""}
           onChange={handleAddressChange("postalCode")}
         />
       </div>
@@ -78,7 +78,7 @@ export default function AddressForm({ type, setAddress, address }) {
             label="State"
             variant="outlined"
             fullWidth
-            value={address["state"]}
+            value={address["state"] || ""}
             onChange={handleAddressChange("state")}
           />
         </div>
@@ -86,7 +86,7 @@ export default function AddressForm({ type, setAddress, address }) {
         <div className="w-full">
           <StripeStateCodes
             name={`${type}State`}
-            value={address["state"]}
+            value={address["state"] || ""}
             onChange={handleStateChange}
             country={address["country"]}
           />
@@ -95,7 +95,7 @@ export default function AddressForm({ type, setAddress, address }) {
       <div className="w-full">
         <StripeCountryCodes
           name={`${type}Country`}
-          value={address["country"]}
+          value={address["country"] || ""}
           onChange={handleCountryChange}
           euro={jwtData["euro"] === true}
         />

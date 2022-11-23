@@ -17,7 +17,7 @@ export default function ContactDetailForm({
           label="Email"
           variant="outlined"
           fullWidth
-          value={contactDetails["email"]}
+          value={contactDetails["email"] || ""}
           onChange={setValue("email")}
         />
       </div>
@@ -27,7 +27,7 @@ export default function ContactDetailForm({
           label="Phone Number"
           variant="outlined"
           fullWidth
-          value={contactDetails["phone_number"]}
+          value={contactDetails["phone_number"] || ""}
           onChange={setValue("phone_number")}
         />
         <TextField
@@ -35,7 +35,7 @@ export default function ContactDetailForm({
           label="Full Name"
           variant="outlined"
           fullWidth
-          value={contactDetails["fullName"]}
+          value={contactDetails["fullName"] || ""}
           onChange={setValue("fullName")}
         />
       </div>
