@@ -229,6 +229,13 @@ function OrderShowPage() {
       </Grouping>
       <Grouping title="Extra Details">
         <ShowAttribute title={"UID"} value={order.uid} />
+        {/*        <ShowEditAttribute
+          title={"Vat Number"}
+          attributeName={"vatNumber"}
+          savedValue={order.vatNumber}
+          // endpoint={`/addresses/${order["billingAddress"]["id"]}`}
+        />*/}
+        <ShowAttribute title={"Vat Number"} value={order.vatNumber} />
         <ShowAttribute
           title={"Charged Customer"}
           value={formatPrice(

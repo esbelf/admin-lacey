@@ -21,9 +21,14 @@ import {
   DiscountShowPage,
   ForgotPasswordPage,
   LoginPage,
+  MaterialsPage,
+  MaterialCreatePage,
+  MaterialShowPage,
   OrderCreatePage,
   OrdersPage,
   OrderShowPage,
+  ProductsPage,
+  ProductShowPage,
   Page404,
   Page500,
   ResetPasswordPage,
@@ -113,6 +118,56 @@ function App() {
                   element={
                     <ProtectedAdminRoute>
                       <OrdersPage />
+                    </ProtectedAdminRoute>
+                  }
+                />
+
+                <Route
+                  path="/materials"
+                  exact
+                  element={
+                    <ProtectedAdminRoute>
+                      <MaterialsPage />
+                    </ProtectedAdminRoute>
+                  }
+                />
+
+                <Route
+                  path="/materials/new"
+                  exact
+                  element={
+                    <ProtectedAdminRoute>
+                      <MaterialCreatePage />
+                    </ProtectedAdminRoute>
+                  }
+                />
+
+                <Route
+                  path="/materials/:id"
+                  exact
+                  element={
+                    <ProtectedAdminRoute>
+                      <MaterialShowPage />
+                    </ProtectedAdminRoute>
+                  }
+                />
+
+                <Route
+                  path="/products"
+                  exact
+                  element={
+                    <ProtectedAdminRoute>
+                      <ProductsPage />
+                    </ProtectedAdminRoute>
+                  }
+                />
+
+                <Route
+                  path="/products/:id"
+                  exact
+                  element={
+                    <ProtectedAdminRoute>
+                      <ProductShowPage />
                     </ProtectedAdminRoute>
                   }
                 />
