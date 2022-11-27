@@ -19,13 +19,13 @@ export default function OrderSummary() {
     convertCurrency,
     currency,
     discountCode,
-    includeVat,
     shippingAddress,
     shippingCost,
+    vatNumber,
   } = useOrder();
 
   const { subtotal, shippingTotal, discount, salesTax, total } = priceBreakDown(
-    { cart, discountCode, includeVat, shippingAddress, shippingCost }
+    { cart, discountCode, shippingAddress, shippingCost, vatNumber }
   );
 
   return (

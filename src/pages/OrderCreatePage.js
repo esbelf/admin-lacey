@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { isEmpty } from "lodash";
 import { useNavigate } from "react-router-dom";
-import { StripeWrapper } from "../components";
+import { StripeWrapper, ValidateVAT } from "../components";
 import { Wrapper } from "../components/admin";
 import {
   AddressForm,
@@ -37,8 +37,8 @@ function OrderCreatePage() {
     cart,
     contactDetails,
     setContactDetails,
-    includeVat,
-    setIncludeVat,
+    vatNumber,
+    setVatNumber,
     shippingCost,
     setShippingCost,
     currency,
@@ -100,18 +100,7 @@ function OrderCreatePage() {
 
           <FormBlock title="Meta Details">
             <div className="flex-1">
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={includeVat}
-                    onChange={(e) => {
-                      setIncludeVat(e.target.checked);
-                    }}
-                    name="includeVat"
-                  />
-                }
-                label="include VAT"
-              />
+              <ValidateVAT />
             </div>
             <div className="flex-1 mt-4 flex flex-row">
               <div className="flex-grow">

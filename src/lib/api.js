@@ -147,6 +147,26 @@ export const fetchCurrencyRate = async ({ currency, token }) => {
   }
 };
 
+export const validateVatNumber = async ({ vatNumber, token }) => {
+  const res = await axios.post(
+    `${process.env.REACT_APP_API_HOST}/meta_data/validate_vat`,
+    {
+      vat: vatNumber,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Credentials": true,
+      },
+    }
+  );
+  const { valid, valid_format } = res.data;
+  return { valid, validFormat: valid_format };
+};
+
 // export const validateDiscount = async (uid) => {
 //   const res = await axios.get(
 //     `${process.env.REACT_APP_API_HOST}/discounts/validate?uid=${uid}`,

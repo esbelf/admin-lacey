@@ -22,7 +22,7 @@ export const OrderProvider = ({ children }) => {
   const [currency, setCurrency] = useState("EUR");
   const [currencyRate, setCurrencyRate] = useState(1);
   const [discountCode, setDiscountCode] = useState(null);
-  const [includeVat, setIncludeVat] = useState(true);
+  const [vatNumber, setVatNumber] = useState(null);
   const [shippingAddress, setShippingAddress] = useState({});
   const [shippingCost, setShippingCost] = useState(0);
 
@@ -42,7 +42,7 @@ export const OrderProvider = ({ children }) => {
           data["billingAddressIsDifferent"] || false
         );
         setShippingCost(data["shippingCost"] || 0);
-        setIncludeVat(data["includeVat"] || true);
+        setVatNumber(data["vatNumber"] || null);
         setCart(data["cart"] || {});
         setCurrency(data["currency"] || "EUR");
       }
@@ -100,7 +100,7 @@ export const OrderProvider = ({ children }) => {
       contactDetails,
       currency,
       discountCode,
-      includeVat,
+      setVatNumber,
       shippingAddress,
       shippingCost,
     };
@@ -117,8 +117,8 @@ export const OrderProvider = ({ children }) => {
       setBillingAddress(data);
     } else if (field === "billingAddressIsDifferent") {
       setBillingAddressIsDifferent(data);
-    } else if (field == "includeVat") {
-      setIncludeVat(data);
+    } else if (field == "vatNumber") {
+      setVatNumber(data);
     } else if (field === "contactDetails") {
       setContactDetails(data);
     } else if (field === "currency") {
@@ -172,7 +172,7 @@ export const OrderProvider = ({ children }) => {
         phone_number: contactDetails["phone_number"],
         country: tempBillingAddress["country"],
       },
-      include_vat: includeVat,
+      vat_number: vatNumber,
       shipping_address: {
         ...shipping_address,
         country: shippingAddress["country"],
@@ -222,7 +222,7 @@ export const OrderProvider = ({ children }) => {
         currency,
         convertCurrency,
         discountCode,
-        includeVat,
+        vatNumber,
         shippingAddress,
         shippingCost,
 
@@ -238,7 +238,7 @@ export const OrderProvider = ({ children }) => {
         setContactDetails: setField("contactDetails"),
         setCurrency: setField("currency"),
         setDiscountCode: setField("discountCode"),
-        setIncludeVat: setField("includeVat"),
+        setVatNumber: setField("vatNumber"),
         setShippingAddress: setField("shippingAddress"),
         setShippingCost: setField("shippingCost"),
       }}

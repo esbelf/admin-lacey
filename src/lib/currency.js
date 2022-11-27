@@ -127,7 +127,7 @@ export function priceBreakDown({
   discountCode,
   shippingAddress,
   shippingCost,
-  includeVat,
+  vatNumber,
 }) {
   let prevSubtotal = totalPriceInCart({ cart });
   const shippingTotal = calculateShippingCost({
@@ -140,13 +140,12 @@ export function priceBreakDown({
     subtotal: prevSubtotal,
     discountCode,
   });
-  let salesTax = 0;
-  if (includeVat) {
-    salesTax = calculateSalesTax({
-      subtotal: subtotal + shippingTotal,
-      address: shippingAddress,
-    });
-  }
+  const salesTax = calculateSalesTax({
+    subtotal: subtotal + shippingTotal,
+    address: shippingAddress,
+    vatNumber,
+  });
+
   const total = subtotal + salesTax + shippingTotal;
 
   return {
@@ -207,7 +206,7 @@ export function calculateShippingCost({ cart, shippingCountry, shippingCost }) {
   return shippingCost;
 }
 
-export function calculateSalesTax({ subtotal, address }) {
+export function calculateSalesTax({ subtotal, address, vatNumber }) {
   if (getValueByKey(address["country"]) === "US" || isNil(address["country"])) {
     const postalCode = getValueByKey(address["postalCode"]);
     const result = northAmericanZipCodes.lookup(postalCode) || {};
@@ -218,6 +217,12 @@ export function calculateSalesTax({ subtotal, address }) {
   }
   if (getValueByKey(address["country"]) === "CA") {
     return 0;
+  }
+  if (!isEmpty(vatNumber)) {
+    return 0;
+  }
+  if (getValueByKey(address["country"]) === "GB") {
+    return subtotal * 0.2;
   }
   return subtotal * 0.21;
 }
