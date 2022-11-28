@@ -99,10 +99,6 @@ function OrderShowPage() {
       </Grouping>
       <Grouping title={"Receipt"}>
         <ShowAttribute
-          title={"Order Date"}
-          value={formatDate(new Date(order["createdAt"]))}
-        />
-        <ShowAttribute
           title={"Subtotal"}
           value={formatPrice(order["subtotalCents"], order["currency"])}
         />
