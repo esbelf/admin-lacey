@@ -5,6 +5,7 @@ import { StripeWrapper, ValidateVAT } from "../components";
 import { Wrapper } from "../components/admin";
 import {
   AddressForm,
+  BlankOrder,
   ContactDetailForm,
   DiscountForm,
   OrderSummary,
@@ -145,6 +146,14 @@ function OrderCreatePage() {
 
           <FormBlock title="Charge Customer">
             <StripeCreditCardCheckout />
+          </FormBlock>
+
+          <div className="flex-1">
+            <Typography variant="h4">OR</Typography>
+          </div>
+
+          <FormBlock title="Create Blank Order for accounting reasons">
+            <BlankOrder />
           </FormBlock>
         </div>
       </Wrapper>
