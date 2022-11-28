@@ -27,8 +27,8 @@ export default function ContactDetailForm({
           label="Phone Number"
           variant="outlined"
           fullWidth
-          value={contactDetails["phone_number"] || ""}
-          onChange={setValue("phone_number")}
+          value={contactDetails["phoneNumber"] || ""}
+          onChange={setValue("phoneNumber")}
         />
         <TextField
           id="fullName"

@@ -18,7 +18,6 @@ export default function DiscountShowPage() {
   const { data: discount, loading } = useApiFetch({
     url: `/discounts/${params.id}`,
   });
-  console.log("DiscountShowPAge", discount, params.id);
   if (loading) {
     return (
       <Wrapper>

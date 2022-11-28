@@ -55,7 +55,6 @@ export const OrderProvider = ({ children }) => {
     // setBillingAddress({});
     // setShippingAddress({});
     setCurrency(!isEmpty(jwtData) && !jwtData["euro"] ? "USD" : "EUR");
-    console.log("current currency", currency);
   }, [jwtData]);
 
   useEffect(() => {
@@ -63,7 +62,6 @@ export const OrderProvider = ({ children }) => {
       if (isNil(authToken)) {
         return;
       }
-      console.log("currency", currency, jwtData["euro"]);
       if (currency === "EUR" && jwtData["euro"]) {
         setCurrency("EUR");
         setCurrencyRate(1);
@@ -156,6 +154,7 @@ export const OrderProvider = ({ children }) => {
     const tempBillingAddress = billingAddressIsDifferent
       ? billingAddress
       : shippingAddress;
+    const contact = decamelize(contactDetails, "_");
     const billing_address = decamelize(tempBillingAddress, "_");
     const shipping_address = decamelize(shippingAddress, "_");
     const cartIds = {};
@@ -164,12 +163,12 @@ export const OrderProvider = ({ children }) => {
     });
     const params = {
       cart: cartIds,
-      contact: contactDetails,
+      contact: contact,
       currency: currency,
       billing_address: {
         ...billing_address,
-        email: contactDetails["email"],
-        phone_number: contactDetails["phone_number"],
+        email: contact["email"],
+        phone_number: contact["phone_number"],
         country: tempBillingAddress["country"],
       },
       vat_number: vatNumber,
@@ -204,7 +203,6 @@ export const OrderProvider = ({ children }) => {
     }
     // TODO validate shipping address
     if (isEmpty(cart)) {
-      console.log("cart empty error");
       setErrorMessage("No products in cart");
       return false;
     }

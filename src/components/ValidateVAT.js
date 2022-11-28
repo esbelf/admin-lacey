@@ -13,7 +13,7 @@ export default function ValidateVAT() {
   const [processing, setProcessing] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [message, setMessage] = useState(null);
-  console.log("authToken", authToken);
+
   const onValidate = async () => {
     try {
       setProcessing(true);
@@ -22,7 +22,7 @@ export default function ValidateVAT() {
         token: authToken,
       });
       if (valid) {
-        setVatNumber(vatNumber);
+        setVatNumber(vatStr);
         setMessage("Valid VAT Number");
         setErrorMessage(null);
       } else if (!validFormat) {
