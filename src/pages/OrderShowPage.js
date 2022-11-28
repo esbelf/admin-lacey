@@ -10,10 +10,16 @@ import {
 import { useApiFetch } from "../hooks/api";
 import { Button, CircularProgress, Typography } from "@mui/material";
 import { formatPrice } from "../lib/currency";
+import { updateCall } from "../lib/api";
+import useAuth from "../contexts/auth";
 import { isNil } from "lodash";
 import { Link } from "react-router-dom";
 import PrintIcon from "@mui/icons-material/Print";
 import StoreIcon from "@mui/icons-material/Store";
+import { ValidateVAT } from "../components/order";
+import useNotification from "../contexts/notification";
+// import StripeInvoiceId from "./StripeInvoiceId";
+// import StripePaymentIntent from "./StripePaymentIntent";
 
 function padTo2Digits(num) {
   return num.toString().padStart(2, "0");
@@ -240,14 +246,29 @@ function OrderShowPage() {
         />
       </Grouping>
       <Grouping title="Extra Details">
-        <ShowAttribute title={"UID"} value={order.uid} />
-        {/*        <ShowEditAttribute
-          title={"Vat Number"}
-          attributeName={"vatNumber"}
-          savedValue={order.vatNumber}
-          // endpoint={`/addresses/${order["billingAddress"]["id"]}`}
-        />*/}
-        <ShowAttribute title={"Vat Number"} value={order.vatNumber} />
+        <ShowEditAttribute
+          title={"Stripe Payment Intent"}
+          attributeName={"uid"}
+          savedValue={order.uid}
+          endpoint={`/orders/${order.id}/stripe_intent`}
+        />
+        <ShowEditAttribute
+          title={"Stripe Invoice ID"}
+          attributeName={"stripeInvoiceId"}
+          savedValue={order.stripeInvoiceId}
+          endpoint={`/orders/${order.id}/stripe_invoice`}
+        />
+        <div className="flex flex-col">
+          <div className="flex-1 flex flex-row my-1">
+            <div className="px-3 py-2 w-48">
+              <Typography>VAT Number</Typography>
+            </div>
+            <div className="flex flex-col justify-center w-full">
+              <UpdateVatNumber orderId={order.id} vatNumber={order.vatNumber} />
+            </div>
+          </div>
+        </div>
+
         <ShowAttribute
           title={"Charged Customer"}
           value={formatPrice(
@@ -266,6 +287,7 @@ function OrderShowPage() {
           title={"Stripe Cost"}
           value={formatPrice(order.stripeFeeCents, order.stripeFeeCurrency)}
         />
+
         <ShowAttribute title={"Order Date"} value={order.orderDate} />
         <ShowAttribute title={"Status"} value={order.status} />
         <ShowAttribute title={"Tracking Number"} value={order.trackingNumber} />
@@ -324,6 +346,28 @@ function StripeButton({ order }) {
   }
 
   return <React.Fragment />;
+}
+
+function UpdateVatNumber({ orderId, vatNumber }) {
+  const { authToken } = useAuth();
+  const { setErrorMessage, setSuccessMessage } = useNotification();
+
+  const onSetVatNumber = async (vatStr) => {
+    const res = await updateCall({
+      endpoint: `/orders/${orderId}`,
+      authToken,
+      data: {
+        vatNumber: vatStr,
+      },
+    });
+    if (res.status === 400) {
+      setErrorMessage(res.data["error_messages"]);
+    } else {
+      setSuccessMessage("Saved!");
+    }
+  };
+
+  return <ValidateVAT vatNumber={vatNumber} setVatNumber={onSetVatNumber} />;
 }
 
 export default OrderShowPage;

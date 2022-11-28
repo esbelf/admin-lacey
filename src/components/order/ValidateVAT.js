@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import useOrder from "../contexts/order";
-import useAuth from "../contexts/auth";
-import { validateVatNumber } from "../lib/api";
-import Notification from "./Notification";
+import useOrder from "../../contexts/order";
+import useAuth from "../../contexts/auth";
+import { validateVatNumber } from "../../lib/api";
+import Notification from "../Notification";
 import { Button } from "@mui/material";
 
-export default function ValidateVAT() {
+export default function ValidateVAT({ vatNumber, setVatNumber }) {
   const { authToken } = useAuth();
-  const { vatNumber, setVatNumber } = useOrder();
+  // const { vatNumber, setVatNumber } = useOrder();
 
   const [vatStr, setVatStr] = useState(vatNumber);
   const [processing, setProcessing] = useState(false);
@@ -46,6 +46,10 @@ export default function ValidateVAT() {
     setVatStr(str);
   };
 
+  const onOverride = () => {
+    setVatNumber(vatStr);
+  };
+
   return (
     <div className="w-full flex flex-col">
       {message && (
@@ -79,6 +83,17 @@ export default function ValidateVAT() {
           >
             Validate
           </Button>
+          {errorMessage && (
+            <Button
+              fullWidth
+              color="secondary"
+              variant="contained"
+              onClick={onOverride}
+              className="h-full"
+            >
+              Override
+            </Button>
+          )}
         </div>
       </div>
     </div>

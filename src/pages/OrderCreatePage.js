@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { isEmpty } from "lodash";
 import { useNavigate } from "react-router-dom";
-import { StripeWrapper, ValidateVAT } from "../components";
+import { StripeWrapper } from "../components";
 import { Wrapper } from "../components/admin";
 import {
   AddressForm,
@@ -13,6 +13,7 @@ import {
   StripeCreditCardCheckout,
   StripeCurrencyCodes,
   StripeInvoice,
+  ValidateVAT,
 } from "../components/order";
 import {
   Autocomplete,
@@ -101,7 +102,7 @@ function OrderCreatePage() {
 
           <FormBlock title="Meta Details">
             <div className="flex-1">
-              <ValidateVAT />
+              <ValidateVAT vatNumber={vatNumber} setVatNumber={setVatNumber} />
             </div>
             <div className="flex-1 mt-4 flex flex-row">
               <div className="flex-grow">

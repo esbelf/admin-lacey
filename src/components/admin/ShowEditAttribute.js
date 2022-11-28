@@ -73,13 +73,13 @@ export default function ShowEditAttribute({
           )}
         </div>
         {editAttribute && (
-          <div className="pl-2 py-2 w-24">
+          <div className="pl-2 py-2 w-24 flex flex-col justify-center">
             <Button variant="contained" onClick={onSave} color="primary">
               Save
             </Button>
           </div>
         )}
-        <div className="pl-2 py-2 w-24">
+        <div className="pl-2 py-2 w-24 flex flex-col justify-center">
           <Button
             variant="contained"
             onClick={() => {

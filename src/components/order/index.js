@@ -8,3 +8,4 @@ export { default as StripeCreditCardCheckout } from "./StripeCreditCardCheckout"
 export { default as StripeCard } from "./StripeCard";
 export { default as StripeCurrencyCodes } from "./StripeCurrencyCodes";
 export { default as StripeInvoice } from "./StripeInvoice";
+export { default as ValidateVAT } from "./ValidateVAT";
