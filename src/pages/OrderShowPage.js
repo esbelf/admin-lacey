@@ -260,6 +260,13 @@ function OrderShowPage() {
           )}
         />
         <ShowAttribute
+          title={"Refunded Customer"}
+          value={formatPrice(
+            order.stripeRefundCents,
+            order.stripeRefundCurrency
+          )}
+        />
+        <ShowAttribute
           title={"Stripe Cost"}
           value={formatPrice(order.stripeFeeCents, order.stripeFeeCurrency)}
         />
