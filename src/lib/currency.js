@@ -118,7 +118,7 @@ export function totalPriceInCart({ cart }) {
 }
 export function quantityOfProducts({ cart }) {
   return Object.values(cart)
-    .map((quantity) => parseInt(quantity))
+    .map((obj) => parseInt(obj.quantity))
     .reduce((a, b) => a + b, 0);
 }
 
