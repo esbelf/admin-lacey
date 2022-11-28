@@ -4,7 +4,7 @@ import useAuth from "../../contexts/auth";
 import useOrder from "../../contexts/order";
 import { useNavigate } from "react-router-dom";
 import { saveCall } from "../../lib/api";
-
+import { isEmpty } from "lodash";
 export default function BlankOrder() {
   const { generateStripeBaseParams, validateOrderParams } = useOrder();
   const { authToken } = useAuth();
@@ -26,7 +26,10 @@ export default function BlankOrder() {
         data,
       });
       const orderId = response.data.orderId;
-      navigate(`/orders/${orderId}`);
+      console.log(response.data);
+      if (!isEmpty(orderId)) {
+        navigate(`/orders/${orderId}`);
+      }
     } catch (err) {
       console.error(err);
       setErrorMessage(err.message);
