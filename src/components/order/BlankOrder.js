@@ -26,10 +26,7 @@ export default function BlankOrder() {
         data,
       });
       const orderId = response.data.orderId;
-      console.log(response.data);
-      if (!isEmpty(orderId)) {
-        navigate(`/orders/${orderId}`);
-      }
+      navigate(`/orders/${orderId}`);
     } catch (err) {
       console.error(err);
       setErrorMessage(err.message);
