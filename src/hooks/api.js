@@ -22,7 +22,6 @@ export function useApiFetch({ url }) {
           },
         })
         .then(({ data }) => {
-          console.log("API DATA", data);
           setData(camelizeKeys(data));
         })
         .catch((error) => {

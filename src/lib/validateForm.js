@@ -40,11 +40,14 @@ const validateAddress = (address) => {
   if (validateString(address["postalCode"])) {
     throw new Error("Please fill out your Postal Code");
   }
-  if (validateString(address["state"])) {
-    throw new Error("Please fill out your State or Providence");
-  }
   if (isNil(address["country"]) || isEmpty(address["country"])) {
     throw new Error("Please fill out your Country");
+  }
+  if (
+    ["US", "CA"].includes(address["country"]) &&
+    validateString(address["state"])
+  ) {
+    throw new Error("Please fill out your State or Providence");
   }
 };
 

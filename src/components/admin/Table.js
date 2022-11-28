@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import useAuth from "../../contexts/auth";
 
 import { useTheme } from "@mui/material/styles";
 import {
@@ -26,6 +27,8 @@ import SearchIcon from "@mui/icons-material/Search";
 import { usePaginationApiFetch } from "../../hooks/api";
 
 export default function TableWrapper({ url, paginationKey, customTableRow }) {
+  const { jwtData } = useAuth();
+
   const [searchQuery, setSearchQuery] = useState("");
   const [page, setPage] = React.useState(1);
 
@@ -72,7 +75,7 @@ export default function TableWrapper({ url, paginationKey, customTableRow }) {
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
           <TableBody>
-            {data.map((row) => customTableRow({ row }))}
+            {data.map((row) => customTableRow({ euro: jwtData["euro"], row }))}
 
             {emptyRows > 0 && (
               <TableRow style={{ height: 53 * emptyRows }}>

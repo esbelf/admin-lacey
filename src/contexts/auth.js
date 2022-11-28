@@ -31,7 +31,6 @@ export function AuthProvider({ children }) {
     const storedJWT = localStorage.getItem(localStorageJWTKey);
     if (!isNil(storedJWT)) {
       const decodedJWT = jwt_decode(storedJWT);
-      console.log("decodedJWT", decodedJWT);
       setJwtData(decodedJWT);
       setAuthToken(storedJWT);
     }

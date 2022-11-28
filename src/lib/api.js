@@ -58,6 +58,28 @@ export const saveCall = async ({ endpoint, authToken, data }) => {
   }
 };
 
+export const updateCall = async ({ endpoint, authToken, data }) => {
+  try {
+    const res = await axios.put(
+      `${process.env.REACT_APP_API_HOST}${endpoint}`,
+      decamelizeKeys(data),
+      {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true,
+        },
+      }
+    );
+
+    return camelizeKeys(res);
+  } catch (error) {
+    return error.response;
+  }
+};
+
 export const sendForgotPasswordEmail = async ({ email }) => {
   try {
     const res = await axios.post(
@@ -102,6 +124,47 @@ export const sendResetPassword = async ({
   } catch (error) {
     return error.response;
   }
+};
+
+export const fetchCurrencyRate = async ({ currency, token }) => {
+  try {
+    const res = await axios.get(
+      `${process.env.REACT_APP_API_HOST}/meta_data/currency_rate?currency=${currency}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true,
+        },
+      }
+    );
+
+    return camelizeKeys(res);
+  } catch (error) {
+    return { error: error.response };
+  }
+};
+
+export const validateVatNumber = async ({ vatNumber, token }) => {
+  const res = await axios.post(
+    `${process.env.REACT_APP_API_HOST}/meta_data/validate_vat`,
+    {
+      vat: vatNumber,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Credentials": true,
+      },
+    }
+  );
+  const { valid, valid_format } = res.data;
+  return { valid, validFormat: valid_format };
 };
 
 // export const validateDiscount = async (uid) => {

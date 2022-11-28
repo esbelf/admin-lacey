@@ -65,7 +65,38 @@ export function formatPrice(amountInCents, currency) {
       style: "currency",
       currency: "EUR",
     });
+  } else if (currency === "GBP") {
+    locale = Intl.NumberFormat("de-DE", {
+      style: "currency",
+      currency: "GBP",
+    });
+  } else if (currency === "DKK") {
+    locale = Intl.NumberFormat("de-DE", {
+      style: "currency",
+      currency: "DKK",
+    });
+  } else if (currency === "NOK") {
+    locale = Intl.NumberFormat("de-DE", {
+      style: "currency",
+      currency: "NOK",
+    });
+  } else if (currency === "SEK") {
+    locale = Intl.NumberFormat("de-DE", {
+      style: "currency",
+      currency: "SEK",
+    });
+  } else if (currency === "CHF") {
+    locale = Intl.NumberFormat("de-DE", {
+      style: "currency",
+      currency: "CHF",
+    });
+  } else if (currency === "PLN") {
+    locale = Intl.NumberFormat("de-DE", {
+      style: "currency",
+      currency: "PLN",
+    });
   }
+
   return locale.format(parseInt(amountInCents) * 0.01);
 }
 
@@ -91,12 +122,18 @@ export function quantityOfProducts({ cart }) {
     .reduce((a, b) => a + b, 0);
 }
 
-export function priceBreakDown({ cart, discountCode, shippingAddress }) {
-  console.log("cart", cart, shippingAddress);
+export function priceBreakDown({
+  cart,
+  discountCode,
+  shippingAddress,
+  shippingCost,
+  vatNumber,
+}) {
   let prevSubtotal = totalPriceInCart({ cart });
-  const shippingTotal = shippingCost({
+  const shippingTotal = calculateShippingCost({
     cart,
     shippingCountry: shippingAddress.country,
+    shippingCost,
   });
   let { subtotal, discount } = calculateDiscount({
     productCount: quantityOfProducts({ cart }),
@@ -106,8 +143,9 @@ export function priceBreakDown({ cart, discountCode, shippingAddress }) {
   const salesTax = calculateSalesTax({
     subtotal: subtotal + shippingTotal,
     address: shippingAddress,
+    vatNumber,
   });
-  console.log("salesTax", salesTax);
+
   const total = subtotal + salesTax + shippingTotal;
 
   return {
@@ -147,7 +185,7 @@ export function calculateDiscount({ productCount, discountCode, subtotal }) {
     subtotal: total,
   };
 }
-export function shippingCost({ cart, shippingCountry }) {
+export function calculateShippingCost({ cart, shippingCountry, shippingCost }) {
   if (getValueByKey(shippingCountry) === "CA") {
     return Object.values(cart)
       .map(({ product, quantity }) => {
@@ -164,14 +202,14 @@ export function shippingCost({ cart, shippingCountry }) {
   // if (!isNil(shippingZone)) {
   //   return shippingZonePrice(shippingZone);
   // }
-  return 0;
+
+  return shippingCost;
 }
 
-export function calculateSalesTax({ subtotal, address }) {
+export function calculateSalesTax({ subtotal, address, vatNumber }) {
   if (getValueByKey(address["country"]) === "US" || isNil(address["country"])) {
     const postalCode = getValueByKey(address["postalCode"]);
     const result = northAmericanZipCodes.lookup(postalCode) || {};
-    console.log("result", result);
     if (result["state"] === "MI") {
       return subtotal * 0.06; // 6% sales tax
     }
@@ -179,6 +217,12 @@ export function calculateSalesTax({ subtotal, address }) {
   }
   if (getValueByKey(address["country"]) === "CA") {
     return 0;
+  }
+  if (!isEmpty(vatNumber)) {
+    return 0;
+  }
+  if (getValueByKey(address["country"]) === "GB") {
+    return subtotal * 0.2;
   }
   return subtotal * 0.21;
 }

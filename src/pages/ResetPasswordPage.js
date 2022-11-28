@@ -43,7 +43,7 @@ export default function ResetPasswordPage() {
       token: params.token,
     });
     const data = res.data;
-    console.log("sendResetPassword", data);
+
     if (!isNil(data.error)) {
       setError(true);
       setMessage(data.error[0]);

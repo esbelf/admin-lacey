@@ -1,10 +1,10 @@
 import React from "react";
-import useOrder from "../../contexts/order";
 import { TextField, Typography } from "@mui/material";
 
-export default function ContactDetailForm({}) {
-  const { contactDetails, setContactDetails } = useOrder();
-
+export default function ContactDetailForm({
+  contactDetails,
+  setContactDetails,
+}) {
   const setValue = (key) => (event) => {
     setContactDetails({ ...contactDetails, [key]: event.target.value });
   };
@@ -17,7 +17,7 @@ export default function ContactDetailForm({}) {
           label="Email"
           variant="outlined"
           fullWidth
-          value={contactDetails["email"]}
+          value={contactDetails["email"] || ""}
           onChange={setValue("email")}
         />
       </div>
@@ -27,15 +27,15 @@ export default function ContactDetailForm({}) {
           label="Phone Number"
           variant="outlined"
           fullWidth
-          value={contactDetails["phone_number"]}
-          onChange={setValue("phone_number")}
+          value={contactDetails["phoneNumber"] || ""}
+          onChange={setValue("phoneNumber")}
         />
         <TextField
           id="fullName"
           label="Full Name"
           variant="outlined"
           fullWidth
-          value={contactDetails["fullName"]}
+          value={contactDetails["fullName"] || ""}
           onChange={setValue("fullName")}
         />
       </div>

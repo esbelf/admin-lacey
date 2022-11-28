@@ -15,7 +15,8 @@ import { formatPrice } from "../../lib/currency";
 export default function ProductForm({}) {
   const { jwtData } = useAuth();
   const { cart, setCartProductQuantity } = useOrder();
-  const { data: products } = useApiFetch({ url: "/products" });
+  const { data } = useApiFetch({ url: "/products" });
+  const products = data.products || [];
 
   useEffect(() => {
     setSelectedProduct(null);
@@ -75,7 +76,7 @@ export default function ProductForm({}) {
 }
 
 function ProductLineItem({ handleQuantityChange, product, quantity }) {
-  const currency = product.euro ? "EUR" : "USD";
+  const { convertCurrency, currency } = useOrder();
   return (
     <div className="flex flex-row my-5">
       <div className="flex-grow flex flex-col justify-center">
@@ -95,7 +96,7 @@ function ProductLineItem({ handleQuantityChange, product, quantity }) {
       </div>
       <div className="flex-1 flex flex-col justify-center items-end">
         <Typography variant="h6">
-          {formatPrice(product.price * quantity, currency)}
+          {formatPrice(convertCurrency(product.price * quantity), currency)}
         </Typography>
       </div>
     </div>

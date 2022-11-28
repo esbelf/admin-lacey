@@ -50,7 +50,7 @@ code {
 }
 
 .checkout__button {
-  @apply bg-blue-300 text-white text-3xl border-blue-300 border-2 px-4 py-4 font-bold rounded-lg w-full my-2 flex flex-row justify-center;
+  @apply bg-red-500 text-white text-3xl border-2 px-4 py-4 rounded-lg w-full my-2 flex flex-row justify-center;
   &:disabled {
     @apply opacity-50;
     cursor: none !important;
