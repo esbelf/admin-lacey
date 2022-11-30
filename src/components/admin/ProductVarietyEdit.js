@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { Button, Typography, TextField } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import { saveCall } from "../../lib/api";
 import useAuth from "../../contexts/auth";
 import useNotification from "../../contexts/notification";
-import { useApiFetch } from "../../hooks/api";
 import { formatPrice } from "../../lib/currency";
 import { ShowAttribute } from "../../components/admin";
 
@@ -15,7 +14,7 @@ export default function ProductVarietyEdit({
   currentListPriceCurrency,
 }) {
   const { authToken } = useAuth();
-  const { setErrorMessage, setSuccessMessage } = useNotification();
+  const { setSuccessMessage } = useNotification();
 
   const [price, setPrice] = useState(currentPriceCents);
   const [listPrice, setListPrice] = useState(currentListPriceCents);
@@ -26,7 +25,7 @@ export default function ProductVarietyEdit({
     e.preventDefault();
     setLoading(true);
     // TODO check if price and list price are positive integers
-    const res = await saveCall({
+    await saveCall({
       endpoint: `/products/${productId}/product_varieties`,
       authToken,
       data: {
@@ -34,7 +33,6 @@ export default function ProductVarietyEdit({
         listPrice,
       },
     });
-    console.log(res);
     setSuccessMessage("Successfully created new product variety");
     setLoading(false);
   };

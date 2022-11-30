@@ -82,7 +82,7 @@ export default function ProductMaterials({ productId }) {
               attributeName={"quantity"}
               savedValue={row.quantity || 0}
               endpoint={`/material_in_products/${row.id}`}
-              textFieldType="number"
+              fieldType="number"
             />
             <DeleteButton
               endpoint={`/material_in_products/${row.id}`}

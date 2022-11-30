@@ -13,31 +13,14 @@ import { formatPrice } from "../lib/currency";
 import { updateCall } from "../lib/api";
 import useAuth from "../contexts/auth";
 import { isNil } from "lodash";
-import { Link } from "react-router-dom";
 import PrintIcon from "@mui/icons-material/Print";
 import StoreIcon from "@mui/icons-material/Store";
 import { ValidateVAT } from "../components/order";
 import useNotification from "../contexts/notification";
-// import StripeInvoiceId from "./StripeInvoiceId";
-// import StripePaymentIntent from "./StripePaymentIntent";
-
-function padTo2Digits(num) {
-  return num.toString().padStart(2, "0");
-}
-
-function formatDate(date) {
-  return [
-    padTo2Digits(date.getDate()),
-    padTo2Digits(date.getMonth() + 1),
-    date.getFullYear(),
-  ].join("/");
-}
 
 function OrderShowPage() {
   const params = useParams();
   const { data: order, loading } = useApiFetch({ url: `/orders/${params.id}` });
-
-  const onPrint = () => {};
 
   if (loading) {
     return (
@@ -46,8 +29,6 @@ function OrderShowPage() {
       </Wrapper>
     );
   }
-
-  console.log("order", order);
 
   return (
     <Wrapper>
@@ -250,6 +231,13 @@ function OrderShowPage() {
         />
       </Grouping>
       <Grouping title="Extra Details">
+        <ShowEditAttribute
+          title={"Order Date"}
+          attributeName={"orderDate"}
+          savedValue={order.orderDate}
+          endpoint={`/orders/${order.id}`}
+          fieldType="date"
+        />
         <ShowEditAttribute
           title={"Stripe Payment Intent"}
           attributeName={"uid"}

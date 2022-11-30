@@ -11,7 +11,6 @@ import {
 import { Animation } from "@devexpress/dx-react-chart";
 
 import { useApiFetch } from "../hooks/api";
-import { isNil } from "lodash";
 
 export default function AdminPage() {
   return (
@@ -30,7 +29,6 @@ function MonthTotals() {
   const { data, loading } = useApiFetch({
     url: `/meta_data/sold_by_month`,
   });
-  console.log("MonthTotals", data);
   if (loading) {
     return (
       <Wrapper>

@@ -1,33 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { isNil } from "lodash";
+import React from "react";
 import { useParams, Link } from "react-router-dom";
-import useAuth from "../contexts/auth";
 import { useApiFetch } from "../hooks/api";
-import {
-  Autocomplete,
-  Button,
-  CircularProgress,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Button, CircularProgress, Typography } from "@mui/material";
 import {
   Wrapper,
-  Grouping,
   ShowAttribute,
   ShowEditAttribute,
+  MaterialQuantityTable,
 } from "../components/admin";
 
 export default function MaterialShowPage() {
-  const { jwtData } = useAuth();
   const params = useParams();
   const { data: material, loading } = useApiFetch({
     url: `/materials/${params.id}`,
-  });
-  const { data: materialAdditions } = useApiFetch({
-    url: `/materials/${params.id}/material_additions`,
-  });
-  const { data: materialSubtractions } = useApiFetch({
-    url: `/materials/${params.id}/material_subtractions`,
   });
 
   if (loading) {
@@ -37,9 +22,6 @@ export default function MaterialShowPage() {
       </Wrapper>
     );
   }
-  console.log("material", material);
-  console.log("materialSubtractions", materialSubtractions);
-  console.log("materialAdditions", materialAdditions);
   return (
     <Wrapper>
       <div className="flex flex-row justify-between">
@@ -64,7 +46,9 @@ export default function MaterialShowPage() {
           value={material.notification_quantity}
         />
       </div>
-      <div className="flex-1"></div>
+      <div className="flex-1">
+        <MaterialQuantityTable materialId={material.id} />
+      </div>
     </Wrapper>
   );
 }

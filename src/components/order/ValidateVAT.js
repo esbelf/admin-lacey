@@ -7,7 +7,6 @@ import { Button } from "@mui/material";
 
 export default function ValidateVAT({ vatNumber, setVatNumber }) {
   const { authToken } = useAuth();
-  // const { vatNumber, setVatNumber } = useOrder();
 
   const [vatStr, setVatStr] = useState(vatNumber);
   const [processing, setProcessing] = useState(false);
@@ -68,7 +67,7 @@ export default function ValidateVAT({ vatNumber, setVatNumber }) {
             className="h-full tracking-normal focus:outline-none focus:bg-white appearance-none block w-full bg-white text-gray-700 border border-primary rounded-lg py-3 px-4 leading-tight"
             name="vatNumber"
             placeholder="VAT Number"
-            value={vatStr}
+            value={vatStr || ""}
             onChange={handleVatChange}
           />
         </div>

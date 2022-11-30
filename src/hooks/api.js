@@ -3,7 +3,7 @@ import axios from "axios";
 import { camelizeKeys } from "humps";
 import useErrorStatus from "../contexts/errorHandler";
 import useAuth from "../contexts/auth";
-import { isNil, isEmpty } from "lodash";
+import { isNil } from "lodash";
 
 export function useApiFetch({ url }) {
   const { authToken, initialLoad } = useAuth();
@@ -36,7 +36,7 @@ export function useApiFetch({ url }) {
           setLoading(false);
         });
     }
-  }, [url, initialLoad, authToken]);
+  }, [url, initialLoad, authToken, setErrorStatusCode]);
 
   return { data, loading };
 }
@@ -84,7 +84,7 @@ export function usePaginationApiFetch({ url, page, key, searchQuery }) {
         })
         .finally(() => setLoading(false));
     }
-  }, [url, page, key, initialLoad, authToken, searchQuery]);
+  }, [url, page, key, initialLoad, authToken, searchQuery, setErrorStatusCode]);
 
   return { data: Object.values(data), meta, loading };
 }

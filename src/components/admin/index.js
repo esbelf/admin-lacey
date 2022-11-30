@@ -1,5 +1,6 @@
 export { default as DeleteButton } from "./DeleteButton";
 export { default as Grouping } from "./Grouping";
+export { default as MaterialQuantityTable } from "./MaterialQuantityTable";
 export { default as NavigationBar } from "./NavigationBar";
 export { default as ProductMaterials } from "./ProductMaterials";
 export { default as ProductVarietyEdit } from "./ProductVarietyEdit";
