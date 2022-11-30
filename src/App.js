@@ -23,6 +23,7 @@ import {
   LoginPage,
   MaterialsPage,
   MaterialCreatePage,
+  MaterialAdditionPage,
   MaterialShowPage,
   OrderCreatePage,
   OrdersPage,
@@ -138,6 +139,16 @@ function App() {
                   element={
                     <ProtectedAdminRoute>
                       <MaterialCreatePage />
+                    </ProtectedAdminRoute>
+                  }
+                />
+
+                <Route
+                  path="/materials/:id/additions"
+                  exact
+                  element={
+                    <ProtectedAdminRoute>
+                      <MaterialAdditionPage />
                     </ProtectedAdminRoute>
                   }
                 />

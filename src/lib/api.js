@@ -36,6 +36,27 @@ export const deleteCall = async ({ endpoint, authToken }) => {
   return res.data;
 };
 
+export const fetchCall = async ({ endpoint, authToken }) => {
+  try {
+    const res = await axios.get(
+      `${process.env.REACT_APP_API_HOST}${endpoint}`,
+      {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true,
+        },
+      }
+    );
+
+    return camelizeKeys(res);
+  } catch (error) {
+    return error.response;
+  }
+};
+
 export const saveCall = async ({ endpoint, authToken, data }) => {
   try {
     const res = await axios.post(

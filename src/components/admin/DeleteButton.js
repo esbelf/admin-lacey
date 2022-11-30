@@ -5,7 +5,7 @@ import useAuth from "../../contexts/auth";
 import { Button, Typography } from "@mui/material";
 import { deleteCall } from "../../lib/api";
 
-function DeleteButton({ endpoint, redirect }) {
+function DeleteButton({ endpoint, redirect, onSuccess }) {
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
   const { authToken } = useAuth();
@@ -16,7 +16,11 @@ function DeleteButton({ endpoint, redirect }) {
       setLoading(true);
       await deleteCall({ endpoint, authToken });
       setLoading(false);
-      navigate(redirect);
+      if (redirect) {
+        navigate(redirect);
+      } else if (onSuccess) {
+        onSuccess();
+      }
     } catch (err) {
       if (
         err["response"] &&
@@ -40,7 +44,7 @@ function DeleteButton({ endpoint, redirect }) {
       )}
       <Button
         variant="contained"
-        color="primary"
+        color="error"
         onClick={onDelete}
         disabled={loading}
       >

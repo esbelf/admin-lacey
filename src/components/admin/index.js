@@ -1,6 +1,8 @@
 export { default as DeleteButton } from "./DeleteButton";
 export { default as Grouping } from "./Grouping";
 export { default as NavigationBar } from "./NavigationBar";
+export { default as ProductMaterials } from "./ProductMaterials";
+export { default as ProductVarietyEdit } from "./ProductVarietyEdit";
 export { default as ShowAttribute } from "./ShowAttribute";
 export { default as ShowEditAttribute } from "./ShowEditAttribute";
 export { default as ShowEditCountryCodes } from "./ShowEditCountryCodes";

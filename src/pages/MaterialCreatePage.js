@@ -4,12 +4,14 @@ import useAuth from "../contexts/auth";
 import { useNavigate } from "react-router-dom";
 import { Wrapper } from "../components/admin";
 import { isNil } from "lodash";
-import { Notification } from "../components";
-import { TextField, Typography } from "@mui/material";
+// import { Notification } from "../components";
+import { Button, TextField, Typography } from "@mui/material";
+import useNotification from "../contexts/notification";
 
 export default function MaterialCreatePage() {
   const { jwtData, authToken } = useAuth();
   const navigate = useNavigate();
+  const { setErrorMessage, setSuccessMessage } = useNotification();
 
   const [loading, setLoading] = useState(false);
   const [errorMessages, setErrorMessages] = useState(null);
@@ -24,8 +26,9 @@ export default function MaterialCreatePage() {
     const res = await saveCall({ endpoint: "/materials", authToken, data });
     setLoading(false);
     if (res.status === 400) {
-      setErrorMessages(res.data["error_messages"]);
+      setErrorMessage(res.data["error_messages"]);
     } else {
+      setSuccessMessage("Successfully created");
       navigate("/materials");
     }
   };
@@ -33,14 +36,9 @@ export default function MaterialCreatePage() {
   return (
     <Wrapper>
       <div className="my-4">
-        <Typography variant="h2">Create Discount</Typography>
+        <Typography variant="h2">Create Material</Typography>
       </div>
       <div className="flex flex-col max-w-xl">
-        {!isNil(errorMessages) && (
-          <div className="my-2">
-            <Notification smallText={errorMessages[0]} />
-          </div>
-        )}
         <div className="my-2">
           <TextField
             label="Name"
@@ -50,6 +48,16 @@ export default function MaterialCreatePage() {
             fullWidth
             className="my-2"
           />
+        </div>
+        <div className="my-2">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={onSave}
+            disabled={loading}
+          >
+            Save
+          </Button>
         </div>
       </div>
     </Wrapper>

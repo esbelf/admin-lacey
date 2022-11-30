@@ -12,6 +12,7 @@ export { default as DiscountShowPage } from "./DiscountShowPage";
 export { default as ForgotPasswordPage } from "./ForgotPasswordPage";
 export { default as LoginPage } from "./LoginPage";
 export { default as MaterialsPage } from "./MaterialsPage";
+export { default as MaterialAdditionPage } from "./MaterialAdditionPage";
 export { default as MaterialCreatePage } from "./MaterialCreatePage";
 export { default as MaterialShowPage } from "./MaterialShowPage";
 export { default as OrderCreatePage } from "./OrderCreatePage";

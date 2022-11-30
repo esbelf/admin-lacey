@@ -47,6 +47,8 @@ function OrderShowPage() {
     );
   }
 
+  console.log("order", order);
+
   return (
     <Wrapper>
       <div className="flex-1 flex flex-row justify-between mt-2">
@@ -133,24 +135,26 @@ function OrderShowPage() {
         />
       </Grouping>
       <Grouping title={"Products"}>
-        {order.orderLineItems.map((item, index) => (
+        {order.orderItems.map((item, index) => (
           <div className="flex flex-row my-2" key={index}>
             <div className="flex-1 flex flex-col justify-center">
-              <Typography variant="h6">{item.product.name}</Typography>
+              <Typography variant="h6">
+                {item.productVariety.productName}
+              </Typography>
             </div>
             <div className="flex-1 flex flex-row justify-end items-center">
               <Typography variant="h6" className="pr-4">
                 ({item.quantity} x{" "}
                 {formatPrice(
-                  item.product.price,
-                  item.product.euro ? "EUR" : "USD"
+                  item.productVariety.priceCents,
+                  item.productVariety.priceCurrency
                 )}
                 )
               </Typography>
               <Typography variant="h6">
                 {formatPrice(
-                  item.product.price * item.quantity,
-                  item.product.euro ? "EUR" : "USD"
+                  item.productVariety.priceCents * item.quantity,
+                  item.productVariety.priceCurrency
                 )}
               </Typography>
             </div>

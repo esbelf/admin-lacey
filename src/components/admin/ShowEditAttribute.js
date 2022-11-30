@@ -12,6 +12,7 @@ export default function ShowEditAttribute({
   attributeName,
   savedValue,
   endpoint,
+  textFieldType,
 }) {
   const { jwtData, authToken } = useAuth();
   const { setErrorMessage, setSuccessMessage } = useNotification();
@@ -43,7 +44,7 @@ export default function ShowEditAttribute({
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col w-full">
       <div className="flex-1 flex flex-row my-1">
         <div className="px-3 py-2 w-48">
           <Typography>{title}</Typography>
@@ -61,6 +62,7 @@ export default function ShowEditAttribute({
               fullWidth
               value={value}
               onChange={(e) => setValue(e.target.value)}
+              type={textFieldType ? textFieldType : "text"}
             />
           ) : (
             <Typography>

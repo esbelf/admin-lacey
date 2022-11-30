@@ -20,6 +20,8 @@ const adminPages = [
   { label: "Orders", url: "orders" },
   { label: "Customers", url: "customers" },
   { label: "Discounts", url: "discounts" },
+  { label: "Products", url: "products" },
+  { label: "Materials", url: "materials" },
 ];
 
 const dealerPages = [
