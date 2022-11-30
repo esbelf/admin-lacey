@@ -52,13 +52,16 @@ function MonthTotals() {
     "November",
     "December",
   ];
-  const monthTotal = data.map((row) => {
-    const date = new Date(row.month);
-    return {
-      total: row.total,
-      month: month[date.getMonth()],
-    };
-  });
+  const monthTotal = data
+    .map((row) => {
+      const date = new Date(row.month);
+      return {
+        total: row.total,
+        month: month[date.getMonth()],
+        monthInt: date.getMonth(),
+      };
+    })
+    .sort((a, b) => a.monthInt - b.monthInt);
   const currentYear = new Date().getFullYear();
   return (
     <Chart data={monthTotal} size={{ width: "100%", height: "75%" }}>
