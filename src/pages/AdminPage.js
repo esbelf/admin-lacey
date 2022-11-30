@@ -3,18 +3,34 @@ import { Wrapper } from "../components/admin";
 import { Paper } from "@mui/material";
 import {
   Chart,
-  PieSeries,
+  BarSeries,
   Title,
+  ArgumentAxis,
+  ValueAxis,
 } from "@devexpress/dx-react-chart-material-ui";
 import { Animation } from "@devexpress/dx-react-chart";
+
 import { useApiFetch } from "../hooks/api";
 import { isNil } from "lodash";
 
 export default function AdminPage() {
-  // const { data: orders, loading } = useApiFetch({ url: `/orders/pie_chart` });
-  const orders = [];
-  const loading = false;
+  return (
+    <Wrapper>
+      <Paper className="my-6">
+        <MonthTotals />
+      </Paper>
+      <Paper className="my-6">
+        <MatTypeTotals />
+      </Paper>
+    </Wrapper>
+  );
+}
 
+function MonthTotals() {
+  const { data, loading } = useApiFetch({
+    url: `/meta_data/sold_by_month`,
+  });
+  console.log("MonthTotals", data);
   if (loading) {
     return (
       <Wrapper>
@@ -22,30 +38,63 @@ export default function AdminPage() {
       </Wrapper>
     );
   }
-
-  const totalByMatType = calculateTotalByMatType(orders);
+  const month = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  const monthTotal = data.map((row) => {
+    const date = new Date(row.month);
+    return {
+      total: row.total,
+      month: month[date.getMonth()],
+    };
+  });
+  const currentYear = new Date().getFullYear();
   return (
-    <Wrapper>
-      <Paper>
-        <Chart data={totalByMatType}>
-          <PieSeries valueField="quantity" argumentField="mat_type" />
-          <Title text="Totals By Mat Type" />
-          <Animation />
-        </Chart>
-      </Paper>
-    </Wrapper>
+    <Chart data={monthTotal} size={{ width: "100%", height: "75%" }}>
+      <ArgumentAxis />
+      <ValueAxis />
+      <BarSeries valueField="total" argumentField="month" />
+      <Title text={`Totals By Month for ${currentYear}`} />
+      <Animation name="Mats Sold by month 2022" />
+    </Chart>
   );
 }
 
-function calculateTotalByMatType(orders) {
-  const data = {};
-  orders.forEach((order) => {
-    // order.order_line_items.forEach((item) => {
-    //   if (isNil(data[item.sku])) {
-    //     data[item.sku] = 0;
-    //   }
-    //   data[item.sku] += item.quantity;
-    // });
+function MatTypeTotals() {
+  const { data, loading } = useApiFetch({
+    url: `/meta_data/sold_by_mat_type`,
   });
-  return [];
+  if (loading) {
+    return (
+      <Wrapper>
+        <p>Loading</p>
+      </Wrapper>
+    );
+  }
+  const currentYear = new Date().getFullYear();
+  return (
+    <Chart data={data} size={{ width: "100%", height: "75%" }}>
+      <ArgumentAxis />
+      <ValueAxis />
+      <BarSeries valueField="total" argumentField="matType" />
+      <Title text={`Totals By Mat Type for ${currentYear}`} />
+      <Animation
+        name="Types of Mats Sold 2022"
+        // valueField=""
+        // argumentField=""
+        // pointComponent
+      />
+    </Chart>
+  );
 }
