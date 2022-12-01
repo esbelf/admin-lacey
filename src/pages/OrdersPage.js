@@ -4,6 +4,7 @@ import { Button, TableCell, TableRow, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { formatPrice } from "../lib/currency";
 import { orderStatus } from "../lib/helper";
+import dayjs from "dayjs";
 
 export default function OrdersPage() {
   return (
@@ -41,6 +42,11 @@ function orderRow({ euro, row }) {
       </TableCell>
       <TableCell style={{ width: 160 }} align="right">
         {formatPrice(row.totalCents, row.currency)}
+      </TableCell>
+      <TableCell style={{ width: 160 }} align="right">
+        {dayjs(row.orderDate, ["YYYY-MM-DD HH:mm:ss", "DD/MM/YYYY"]).format(
+          "DD/MM/YYYY"
+        )}
       </TableCell>
     </TableRow>
   );
