@@ -114,7 +114,6 @@ function StripeMonthTotals() {
       </Wrapper>
     );
   }
-  console.log("StripeMonthTotals", data);
   const month = [
     "January",
     "February",
