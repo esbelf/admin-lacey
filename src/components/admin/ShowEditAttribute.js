@@ -16,7 +16,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
-import "dayjs/locale/de";
+import "dayjs/locale/en-gb";
 import utc from "dayjs/plugin/utc";
 import { orderStatus } from "../../lib/helper";
 
@@ -141,7 +141,7 @@ function ShowField({ fieldType, value }) {
 function EditFieldByType({ fieldType, attributeName, title, setValue, value }) {
   if (fieldType === "date") {
     return (
-      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en">
+      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
         <DatePicker
           label={title}
           inputFormat={"DD/MM/YYYY"}
