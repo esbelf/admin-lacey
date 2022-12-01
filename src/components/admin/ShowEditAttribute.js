@@ -141,7 +141,7 @@ function ShowField({ fieldType, value }) {
 function EditFieldByType({ fieldType, attributeName, title, setValue, value }) {
   if (fieldType === "date") {
     return (
-      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="de">
+      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en">
         <DatePicker
           label={title}
           inputFormat={"DD/MM/YYYY"}
