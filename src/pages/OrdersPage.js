@@ -3,6 +3,7 @@ import { Wrapper, Table } from "../components/admin";
 import { Button, TableCell, TableRow, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { formatPrice } from "../lib/currency";
+import { orderStatus } from "../lib/helper";
 
 export default function OrdersPage() {
   return (
@@ -32,8 +33,8 @@ function orderRow({ euro, row }) {
       <TableCell component="th" scope="row">
         {euro ? row.orderNumber : row.shipstationKey}
       </TableCell>
-      <TableCell style={{ width: 160 }} align="right">
-        {row.status}
+      <TableCell style={{ width: 200 }} align="right">
+        {orderStatus(row.status)}
       </TableCell>
       <TableCell style={{ width: 160 }} align="right">
         {row.siteName}

@@ -292,8 +292,13 @@ function OrderShowPage() {
           value={formatPrice(order.stripeFeeCents, order.stripeFeeCurrency)}
         />
 
-        <ShowAttribute title={"Order Date"} value={order.orderDate} />
-        <ShowAttribute title={"Status"} value={order.status} />
+        <ShowEditAttribute
+          title={"Status"}
+          attributeName={"status"}
+          savedValue={order.status}
+          endpoint={`/orders/${order.id}`}
+          fieldType="status"
+        />
         <ShowAttribute title={"Tracking Number"} value={order.trackingNumber} />
         <ShowAttribute title={"Ship Date"} value={order.shipDate} />
         <ShowAttribute

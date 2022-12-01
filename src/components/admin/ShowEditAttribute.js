@@ -18,6 +18,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import "dayjs/locale/de";
 import utc from "dayjs/plugin/utc";
+import { orderStatus } from "../../lib/helper";
 
 export default function ShowEditAttribute({
   title,
@@ -131,6 +132,8 @@ function ShowField({ fieldType, value }) {
     );
   } else if (fieldType === "taxRate") {
     return `${value}%`;
+  } else if (fieldType === "status") {
+    return orderStatus(value);
   }
   return value;
 }
@@ -153,7 +156,7 @@ function EditFieldByType({ fieldType, attributeName, title, setValue, value }) {
   } else if (fieldType === "taxRate") {
     return (
       <FormControl fullWidth>
-        <InputLabel id="ax-rate-select-label">Tax Rate</InputLabel>
+        <InputLabel id="tax-rate-select-label">Tax Rate</InputLabel>
         <Select
           labelId="tax-rate-select-label"
           id="tax-rate-select"
@@ -174,6 +177,29 @@ function EditFieldByType({ fieldType, attributeName, title, setValue, value }) {
           <MenuItem value={24}>24</MenuItem>
           <MenuItem value={25}>25</MenuItem>
           <MenuItem value={27}>27</MenuItem>
+        </Select>
+      </FormControl>
+    );
+  } else if (fieldType === "status") {
+    return (
+      <FormControl fullWidth>
+        <InputLabel id="status-select-label">Status</InputLabel>
+        <Select
+          labelId="status-select-label"
+          id="status-select"
+          value={value}
+          label="Status"
+          onChange={(e) => {
+            setValue(e.target.value);
+          }}
+        >
+          <MenuItem value={"waiting_shipping"}>
+            {orderStatus("waiting_shipping")}
+          </MenuItem>
+          <MenuItem value={"completed"}>{orderStatus("completed")}</MenuItem>
+          <MenuItem value={"refunded"}>{orderStatus("refunded")}</MenuItem>
+          <MenuItem value={"failed"}>{orderStatus("failed")}</MenuItem>
+          <MenuItem value={"cancelled"}>{orderStatus("cancelled")}</MenuItem>
         </Select>
       </FormControl>
     );
