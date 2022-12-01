@@ -22,6 +22,10 @@ function OrderShowPage() {
   const params = useParams();
   const { data: order, loading } = useApiFetch({ url: `/orders/${params.id}` });
 
+  function refreshPage() {
+    window.location.reload(false);
+  }
+
   if (loading) {
     return (
       <Wrapper>
@@ -94,6 +98,14 @@ function OrderShowPage() {
         <ShowAttribute
           title={"Shipping"}
           value={formatPrice(order["shippingCostCents"], order["currency"])}
+        />
+        <ShowEditAttribute
+          title={"Tax Rate"}
+          attributeName={"taxRate"}
+          savedValue={order.taxRate}
+          endpoint={`/orders/${order.id}`}
+          fieldType="taxRate"
+          onSuccess={refreshPage}
         />
         <ShowAttribute
           title={"Tax"}

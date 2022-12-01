@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { Button, TextField, Typography } from "@mui/material";
+import {
+  Button,
+  TextField,
+  Typography,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+} from "@mui/material";
 import { isNil } from "lodash";
 import useAuth from "../../contexts/auth";
 import useNotification from "../../contexts/notification";
@@ -17,6 +25,7 @@ export default function ShowEditAttribute({
   savedValue,
   endpoint,
   fieldType,
+  onSuccess,
 }) {
   const { authToken } = useAuth();
   const { setErrorMessage, setSuccessMessage } = useNotification();
@@ -48,6 +57,9 @@ export default function ShowEditAttribute({
       setSuccessMessage("Saved!");
       setResetValue(res.data[attributeName]);
       setEditAttribute(false);
+      if (onSuccess) {
+        onSuccess();
+      }
     }
   };
   return (
@@ -117,6 +129,8 @@ function ShowField({ fieldType, value }) {
     return dayjs(value, ["YYYY-MM-DD HH:mm:ss", "DD/MM/YYYY"]).format(
       "DD/MM/YYYY"
     );
+  } else if (fieldType === "taxRate") {
+    return `${value}%`;
   }
   return value;
 }
@@ -135,6 +149,33 @@ function EditFieldByType({ fieldType, attributeName, title, setValue, value }) {
           renderInput={(params) => <TextField {...params} />}
         />
       </LocalizationProvider>
+    );
+  } else if (fieldType === "taxRate") {
+    return (
+      <FormControl fullWidth>
+        <InputLabel id="ax-rate-select-label">Tax Rate</InputLabel>
+        <Select
+          labelId="tax-rate-select-label"
+          id="tax-rate-select"
+          value={value}
+          label="Tax Rate"
+          onChange={(e) => {
+            setValue(e.target.value);
+          }}
+        >
+          <MenuItem value={6}>6</MenuItem>
+          <MenuItem value={17}>17</MenuItem>
+          <MenuItem value={18}>18</MenuItem>
+          <MenuItem value={19}>19</MenuItem>
+          <MenuItem value={20}>20</MenuItem>
+          <MenuItem value={21}>21</MenuItem>
+          <MenuItem value={22}>22</MenuItem>
+          <MenuItem value={23}>23</MenuItem>
+          <MenuItem value={24}>24</MenuItem>
+          <MenuItem value={25}>25</MenuItem>
+          <MenuItem value={27}>27</MenuItem>
+        </Select>
+      </FormControl>
     );
   } else if (fieldType === "number") {
     return (
