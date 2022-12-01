@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 import { Button, TextField, Typography } from "@mui/material";
 import { isNil } from "lodash";
 import useAuth from "../../contexts/auth";
 import useNotification from "../../contexts/notification";
 import { updateCall } from "../../lib/api";
-import Notification from "../Notification";
-import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
+import "dayjs/locale/de";
+import utc from "dayjs/plugin/utc";
 
 export default function ShowEditAttribute({
   title,
@@ -18,12 +18,16 @@ export default function ShowEditAttribute({
   endpoint,
   fieldType,
 }) {
-  const { jwtData, authToken } = useAuth();
+  const { authToken } = useAuth();
   const { setErrorMessage, setSuccessMessage } = useNotification();
 
   const [editAttribute, setEditAttribute] = useState(false);
-  const [resetValue, setResetValue] = useState(savedValue);
-  const [value, setValue] = useState(savedValue);
+  const [resetValue, setResetValue] = useState(
+    setStateValue({ fieldType, value: savedValue })
+  );
+  const [value, setValue] = useState(
+    setStateValue({ fieldType, value: savedValue })
+  );
 
   const [loading, setLoading] = useState(false);
 
@@ -34,7 +38,7 @@ export default function ShowEditAttribute({
       endpoint,
       authToken,
       data: {
-        [attributeName]: value,
+        [attributeName]: value.toString(),
       },
     });
     setLoading(false);
@@ -66,19 +70,18 @@ export default function ShowEditAttribute({
           />
         ) : (
           <Typography>
-            <React.Fragment>
-              {isNil(value) ? (
-                <span className="text-gray-500">Unkown</span>
-              ) : (
-                value
-              )}
-            </React.Fragment>
+            <ShowField fieldType={fieldType} value={value} />
           </Typography>
         )}
       </div>
       {editAttribute && (
         <div className="pl-2 py-2 w-36 flex flex-col justify-center">
-          <Button variant="contained" onClick={onSave} color="primary">
+          <Button
+            variant="contained"
+            onClick={onSave}
+            disabled={loading}
+            color="primary"
+          >
             Save
           </Button>
         </div>
@@ -99,16 +102,35 @@ export default function ShowEditAttribute({
   );
 }
 
+function setStateValue({ fieldType, value }) {
+  if (fieldType === "date") {
+    dayjs.extend(utc);
+    return dayjs(value).utc();
+  }
+  return value;
+}
+
+function ShowField({ fieldType, value }) {
+  if (isNil(value)) {
+    return <span className="text-gray-500">Unkown</span>;
+  } else if (fieldType === "date") {
+    return dayjs(value, ["YYYY-MM-DD HH:mm:ss", "DD/MM/YYYY"]).format(
+      "DD/MM/YYYY"
+    );
+  }
+  return value;
+}
+
 function EditFieldByType({ fieldType, attributeName, title, setValue, value }) {
   if (fieldType === "date") {
     return (
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DesktopDatePicker
+      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="de">
+        <DatePicker
           label={title}
           inputFormat={"DD/MM/YYYY"}
           value={value}
           onChange={(e) => {
-            setValue(e.toJSON());
+            setValue(e);
           }}
           renderInput={(params) => <TextField {...params} />}
         />
